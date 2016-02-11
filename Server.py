@@ -1,6 +1,7 @@
 import threading
 import socket
 import select
+import re
 
 server_socket=socket.socket()
 class Communication:
@@ -26,8 +27,14 @@ class Communication:
             th = threading.Thread(target=Communication.Thread_Handler,args=(con, addr,))
             x=con.recv(1024)
             print x
-            SessionManager().addnewsession(addr)
+            print con
+            a=str(addr)
+            print a
+            port2=a.find()
+            print port2
+            SessionManager().addnewsession(a,con)
             SessionManager().printlist()
+
 
     def recvbuff(self):
         t=None
@@ -39,13 +46,15 @@ class Communication:
 
 
 class SessionManager:
-    open_client_sockets=[]
-    def addnewsession(self,addr):
-        SessionManager.open_client_sockets.append(addr)
+    open_client_sockets={}
+    def addnewsession(self,addr,con):
+
+        SessionManager.open_client_sockets[addr]=con
+        print
     def disconnect(self,addr):
-        for session in SessionManager.open_client_sockets:
-            if session==addr:
-                SessionManager.open_client_sockets.remove(session)
+
+        SessionManager.open_client_sockets.pop(self,addr)
+        #SessionManager.open_client_sockets.pop(session,SessionManager.open_client_sockets[session])
     def upload(self,filename,content):
         f = open(filename ,content)
         while True:
@@ -53,6 +62,7 @@ class SessionManager:
     def printlist(self):
         for session in SessionManager.open_client_sockets:
             print session
+            print SessionManager.open_client_sockets[session]
 
 
 
@@ -63,9 +73,34 @@ class Login:
 class Register:
     def Register(self):
         t=None
+
 class PasswordPolicy:
-    def IsStrongPass(self):
-        t=None
+    def passlength(self,password):
+        length=len(password)
+        if length>=ConfigurationManager.passwordlength:
+            return True
+        else:
+            return  False
+    def iscomplicated(self,password):
+        if ConfigurationManager.passwordcomplicated==True:
+                answer=re.match(['0-9'],password)
+                if answer:
+                    answer2=re.match(['a-z'],password)
+                    if answer2:
+                        answer3=re.match(['A-Z'],password)
+                        if answer3:
+                            return  True
+                        else:
+                            return False
+                    else:
+                        return False
+                else:
+                    return False
+        else:
+            return  True
+
+
+
 class Authentication:
     def IsValidUser(self):
         t=None
@@ -96,6 +131,8 @@ class KeyManager:
         t=None
 
 class ConfigurationManager:
+    passwordcomplicated=True
+    passwordlength=8
     def GetMaxconnection(self):
         return ConfigurationManager.__ConfigurationManager.maxcount
     class __ConfigurationManager:
@@ -104,6 +141,10 @@ class ConfigurationManager:
             self.val = arg
         def __str__(self):
             return repr(self) + self.val
+        def iscomplicated(self):
+            return ConfigurationManager.passwordcomplicated
+        def passwordlength(self):
+            return  ConfigurationManager.passwordlength
     instance = None
     def __init__(self, arg):
         if not ConfigurationManager.instance:
