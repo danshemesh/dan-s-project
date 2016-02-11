@@ -1,4 +1,7 @@
 import Client
+print "welcone new client to dan's cloud"
+print "you can use our of cloud saving and sharing from everywhere"
+
 a=Client.Communication().connect()
 true=True
 while true:

@@ -1,7 +1,9 @@
+#region ----------   IMPORTS   -----------------------------
 import threading
 import socket
 import select
 import re
+#endregion
 
 server_socket=socket.socket()
 class Communication:
@@ -47,7 +49,7 @@ class Communication:
 
 class SessionManager:
     open_client_sockets={}
-    def addnewsession(self,addr,con):
+    def addnewsession(self,addr,con):    #adds a session to open_client_socket(list)
 
         SessionManager.open_client_sockets[addr]=con
         print
@@ -75,37 +77,35 @@ class Register:
         t=None
 
 class PasswordPolicy:
-    def passlength(self,password):
+    def passlength(self,password):    #checks if the password is in the length given in configuration manager
         length=len(password)
         if length>=ConfigurationManager.passwordlength:
             return True
         else:
             return  False
-    def iscomplicated(self,password):
-        if ConfigurationManager.passwordcomplicated==True:
-                answer=re.match(['0-9'],password)
-                if answer:
-                    answer2=re.match(['a-z'],password)
-                    if answer2:
-                        answer3=re.match(['A-Z'],password)
-                        if answer3:
-                            return  True
-                        else:
-                            return False
-                    else:
-                        return False
-                else:
-                    return False
-        else:
+    def iscomplicated(self,password):    #checks if the password needs to be complicated(according to configuration manager) if so checks numbers letters and big letters
+        #if ConfigurationManager.passwordcomplicated==True:
+        answer = re.match(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$', password)
+        if answer is not None:
             return  True
+
+
 
 
 
 class Authentication:
     def IsValidUser(self):
         t=None
-    def IsValidPass(self):
+    def IsValidPass(self,password):
         t=None
+    def IsValidPassOfNewUser(self,password): #for new sighnd user checks if password True in all criteria in configuration manager
+        answer=PasswordPolicy.passlength(password)
+        if ConfigurationManager.passwordcomplicated==True:
+            answer2= PasswordPolicy.iscomplicated(password)
+        if answer==True and answer2==True:
+            return True
+
+
 class TokenManager:
     Listofactivetokens=[]
     def GenarateRandId(self):
