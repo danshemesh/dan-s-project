@@ -15,6 +15,8 @@ class Communication:
     SessionList=[]
     def Thread_Handler(self, con, addr):
         print addr
+        SessionManager().addnewsession(addr,con)
+
 
     def listener(self):
         Port=1234
@@ -31,7 +33,8 @@ class Communication:
         while 1:
             con, addr =server_socket.accept()
 
-            th = threading.Thread(target=Communication.Thread_Handler,args=(con, addr,))
+            th = threading.Thread(target=Communication().Thread_Handler,args=(con, addr,))
+            th.start()
             x=con.recv(1024)
             print x
             print con
@@ -39,7 +42,7 @@ class Communication:
             print a
             #port2=a.find()
             #print port2
-            SessionManager().addnewsession(a,con)
+            #SessionManager().addnewsession(a,con)
             SessionManager().printlist()
 
 
@@ -132,7 +135,7 @@ class ConvertFiles:
             return image
         if __name__ == '__main__':
             main()
-c=ConvertFiles.imageconvert('C:\Users\User\Desktop\content.txt')
+
 
 
 class Login:
