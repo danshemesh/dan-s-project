@@ -1,7 +1,9 @@
 #region ----------   IMPORTS   -----------------------------
 import threading
 import socket
+from socket import *
 import select
+import thread
 import re
 import PIL
 import PIL.Image
@@ -10,40 +12,46 @@ import PIL.ImageOps
 import PIL.ImageDraw
 #endregion
 
+BUFF = 1024
+HOST = '0.0.0.0'# must be input parameter @TODO
+PORT = 1234 # must be input parameter @TODO
+SessionList=[]
+
+
 server_socket=socket.socket()
 class Communication:
-    SessionList=[]
-    def Thread_Handler(self, con, addr):
-        print addr
-        SessionManager().addnewsession(addr,con)
 
+    def response(self, key):
+        return 'Server response: ' + key
+
+    def Thread_Handler(self, clientsock, addr):
+        while 1:
+            data = clientsock.recv(BUFF)
+            if not data: break
+            print repr(addr) + ' recv:' + repr(data)
+            clientsock.send(self.response(data))
+            print repr(addr) + ' sent:' + repr(self.response(data))
+            if "close" == data.rstrip(): break # type 'close' on client console to close connection from the server side
+
+        clientsock.close()
+        print addr, "- closed connection" #log on console
 
     def listener(self):
-        Port=1234
-        count=0
-        server_socket.bind(('0.0.0.0',Port))
-        server_socket.listen(5)
-        """while count<ConfigurationManager.GetMaxconnection():
-        rlist, wlist, xlist=select.select([server_socket]+SessionManager.open_client_sockets, SessionManager.open_client_sockets,[])
-        for csocket in rlist:
-            if csocket is server_socket:
-                (new_socket, address)=server_socket.accept()
-                SessionManager.open_client_sockets.append(new_socket)
-                print "connection made"""""
-        while 1:
-            con, addr =server_socket.accept()
-
-            th = threading.Thread(target=Communication().Thread_Handler,args=(con, addr,))
-            th.start()
-            x=con.recv(1024)
-            print x
-            print con
-            a=str(addr)
-            print a
-            #port2=a.find()
-            #print port2
-            #SessionManager().addnewsession(a,con)
-            SessionManager().printlist()
+        if __name__=='__main__':
+            ADDR = (HOST, PORT)
+            serversock = socket(AF_INET, SOCK_STREAM)
+            serversock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+            serversock.bind(ADDR)
+            serversock.listen(5)
+            while 1:
+                print 'waiting for connection... listening on port', PORT
+                clientsock, addr = serversock.accept()
+                print '...connected from:', addr
+                thread.start_new_thread(Communication().Thread_Handler, (clientsock, addr))
+                #port2=a.find()
+                #print port2
+                #SessionManager().addnewsession(a,con)
+                #SessionManager().printlist()
 
 
     def recvbuff(self):
@@ -63,7 +71,7 @@ class SessionManager:
         print
     def disconnect(self,addr):
 
-        SessionManager.open_client_sockets.pop(self,addr)
+        SessionManager.open_client_sockets[addr]=-1
         #SessionManager.open_client_sockets.pop(session,SessionManager.open_client_sockets[session])
     def upload(self,filename,content):
         f = open(filename ,content)
