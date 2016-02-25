@@ -14,11 +14,11 @@ import PIL.ImageDraw
 
 BUFF = 1024
 HOST = '0.0.0.0'# must be input parameter @TODO
-PORT = 1234 # must be input parameter @TODO
+PORT = 1237 # must be input parameter @TODO
 SessionList=[]
 
+server_socket=socket()
 
-server_socket=socket.socket()
 class Communication:
 
     def response(self, key):
@@ -37,21 +37,39 @@ class Communication:
         print addr, "- closed connection" #log on console
 
     def listener(self):
-        if __name__=='__main__':
-            ADDR = (HOST, PORT)
-            serversock = socket(AF_INET, SOCK_STREAM)
-            serversock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-            serversock.bind(ADDR)
-            serversock.listen(5)
-            while 1:
-                print 'waiting for connection... listening on port', PORT
-                clientsock, addr = serversock.accept()
-                print '...connected from:', addr
-                thread.start_new_thread(Communication().Thread_Handler, (clientsock, addr))
-                #port2=a.find()
-                #print port2
-                #SessionManager().addnewsession(a,con)
-                #SessionManager().printlist()
+        """ADDR = (HOST, PORT)
+        serversock = socket(AF_INET, SOCK_STREAM)
+        serversock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        serversock.bind(ADDR)
+        serversock.listen(5)
+        while 1:
+            print 'waiting for connection... listening on port', PORT
+            clientsock, addr = serversock.accept()
+            print '1'
+            print '...connected from:', addr
+            thread.start_new_thread(Communication().Thread_Handler, (clientsock, addr))
+            #port2=a.find()
+            #print port2
+            #SessionManager().addnewsession(a,con)
+            #SessionManager().printlist()
+"""
+        print __name__
+
+        print '1'
+        ADDR = (HOST, PORT)
+        serversock = socket(AF_INET, SOCK_STREAM)
+        serversock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        serversock.bind(ADDR)
+        serversock.listen(5)
+        while 1:
+            print 'waiting for connection... listening on port', PORT
+            clientsock, addr = serversock.accept()
+            print '...connected from:', addr
+            thread.start_new_thread(Communication().Thread_Handler, (clientsock, addr))
+            #port2=a.find()
+            #print port2
+            #SessionManager().addnewsession(a,con)
+            #SessionManager().printlist()
 
 
     def recvbuff(self):
