@@ -10,6 +10,7 @@ import PIL.Image
 import PIL.ImageFont
 import PIL.ImageOps
 import PIL.ImageDraw
+import os
 #endregion
 
 BUFF = 1024
@@ -32,6 +33,13 @@ class Communication:
             clientsock.send(self.response(data))
             print repr(addr) + ' sent:' + repr(self.response(data))
             if "close" == data.rstrip(): break # type 'close' on client console to close connection from the server side
+            if "register"==data.rstrip():
+                r=Register()
+                username=r.Register(clientsock)
+                print "opening a new folder with username"
+                r.openfolder(username)
+                clientsock.send(self.response("a folder with your name opend in server"))
+
 
         clientsock.close()
         print addr, "- closed connection" #log on console
@@ -168,8 +176,26 @@ class Login:
     def Login(self):
         t=None
 class Register:
-    def Register(self):
-        t=None
+    def Register(self,clientsock):
+        clientsock.send("please enter a username: ")
+        username=clientsock.recv(1024)
+        """if username in database already the server will ask the client to enter a new username(will be added when therews a database)"""
+        clientsock.send("please enter a password: ")
+        x=False
+        while x==False:
+            password=clientsock.recv(1024)
+            print  PasswordPolicy().passlength(password)
+            print PasswordPolicy().iscomplicated(password)
+            if (PasswordPolicy().passlength(password) and PasswordPolicy().iscomplicated(password)):
+                clientsock.send("password is good")
+                x=True
+            else:
+                clientsock.send("password is not good please try again")
+        return username
+    def openfolder(self,username):
+        newpath = r'C:\\Users\\User\\Desktop\\usersofcloud\\'+username
+        if not os.path.exists(newpath):
+            os.makedirs(newpath)
 
 class PasswordPolicy:
     def passlength(self,password):    #checks if the password is in the length given in configuration manager
@@ -183,6 +209,8 @@ class PasswordPolicy:
         answer = re.match(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$', password)
         if answer is not None:
             return  True
+        else:
+            return False
 
 
 

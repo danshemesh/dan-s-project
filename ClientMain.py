@@ -1,9 +1,18 @@
 import Client
 print "welcone new client to dan's cloud"
 print "you can use our of cloud saving and sharing from everywhere"
-while 1:
-    a=Client.Communication().connect()
-true=True
+a=Client.Communication()
+a.sendmsg()
+msg=a.recvmsg()
+
+while msg!="Server response: close":
+    print msg
+    a.sendmsg()
+    msg=a.recvmsg()
+
+a.disconnect()
+
+"""true=True
 while true:
     b=raw_input("enter: ")
     if b=="disconnect":
@@ -11,6 +20,6 @@ while true:
         if x=='n':
             Client.Presentation().showfiles()
         elif x=='y':
-            true=False
+            true=False"""
 
 
