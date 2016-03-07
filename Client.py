@@ -18,6 +18,12 @@ class Communication():
     def recvmsg(self):
         response=self.client_socket.recv(1024)
         return response
+    def registeru(self):
+        msg=raw_input("please enter username: ")
+        self.client_socket.send(msg)
+    def registerpass(self):
+        msg=raw_input("please enter password: ")
+        self.client_socket.send(msg)
     def disconnect(self):
         #print "are you sure you want to disconnect? y/n"
         #a = raw_input("enter your answer: ")

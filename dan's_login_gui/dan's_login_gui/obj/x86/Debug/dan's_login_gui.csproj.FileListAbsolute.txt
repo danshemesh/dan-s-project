@@ -5,3 +5,4 @@ D:\dan's project\dan-s-project\dan's_login_gui\dan's_login_gui\bin\Debug\dan's_l
 D:\dan's project\dan-s-project\dan's_login_gui\dan's_login_gui\bin\Debug\dan's_login_gui.pdb
 D:\dan's project\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.exe
 D:\dan's project\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.pdb
+D:\dan's project\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.csprojResolveAssemblyReference.cache

@@ -7,8 +7,14 @@ msg=a.recvmsg()
 
 while msg!="Server response: close":
     print msg
-    a.sendmsg()
-    msg=a.recvmsg()
+    if msg!="register":
+        a.sendmsg()
+        msg=a.recvmsg()
+    else:
+        a.registeru()
+        a.registerpass()
+        msg=a.recvmsg()
+
 
 a.disconnect()
 

@@ -189,9 +189,9 @@ class Register:
             if (PasswordPolicy().passlength(password) and PasswordPolicy().iscomplicated(password)):
                 clientsock.send("password is good")
                 x=True
+                return username
             else:
                 clientsock.send("password is not good please try again")
-        return username
     def openfolder(self,username):
         newpath = r'C:\\Users\\User\\Desktop\\usersofcloud\\'+username
         if not os.path.exists(newpath):
