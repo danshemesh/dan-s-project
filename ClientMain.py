@@ -1,19 +1,20 @@
 import Client
+import time
 print "welcone new client to dan's cloud"
 print "you can use our of cloud saving and sharing from everywhere"
 a=Client.Communication()
 a.sendmsg()
 msg=a.recvmsg()
-
+time.sleep(1)
 while msg!="Server response: close":
     print msg
     if msg!="register":
         a.sendmsg()
-        msg=a.recvmsg()
     else:
         a.registeru()
         a.registerpass()
-        msg=a.recvmsg()
+
+    msg=a.recvmsg()
 
 
 a.disconnect()
