@@ -5,16 +5,22 @@ print "you can use our of cloud saving and sharing from everywhere"
 a=Client.Communication()
 a.sendmsg()
 msg=a.recvmsg()
-time.sleep(1)
+#time.sleep(1)
 while msg!="Server response: close":
     print msg
-    if msg!="register":
-        a.sendmsg()
+    if msg!="Server response: register":
+        if msg=="password is good":
+            a.client_socket.send("ack")
+        elif msg=="password is not good please try again":
+            a.registerpass()
+        else:
+            a.sendmsg()
     else:
         a.registeru()
         a.registerpass()
 
     msg=a.recvmsg()
+
 
 
 a.disconnect()
@@ -28,5 +34,4 @@ while true:
             Client.Presentation().showfiles()
         elif x=='y':
             true=False"""
-
 

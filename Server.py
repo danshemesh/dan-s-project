@@ -125,7 +125,6 @@ class ConvertFiles:
 
         def text_image(text_path, font_path=None):
             """Convert text file to a grayscale image with black characters on a white background.
-
             arguments:
             text_path - the content of this file will be converted to an image
             font_path - path to a font file (for example impact.ttf)
@@ -177,10 +176,10 @@ class Login:
         t=None
 class Register:
     def Register(self,clientsock):
-        clientsock.send("please enter a username: ")
+        #clientsock.send("please enter a username: ")
         username=clientsock.recv(1024)
         """if username in database already the server will ask the client to enter a new username(will be added when therews a database)"""
-        clientsock.send("please enter a password: ")
+        #clientsock.send("please enter a password: ")
         x=False
         while x==False:
             password=clientsock.recv(1024)
@@ -196,6 +195,10 @@ class Register:
         newpath = r'C:\\Users\\User\\Desktop\\usersofcloud\\'+username
         if not os.path.exists(newpath):
             os.makedirs(newpath)
+            secondpath=r'C:\\Users\\User\\Desktop\\usersofcloud\\'+username+'\\myfiles'
+            thirdpath=r'C:\\Users\\User\\Desktop\\usersofcloud\\'+username+'\\sharedfiles'
+            os.makedirs(secondpath)
+            os.makedirs(thirdpath)
 
 class PasswordPolicy:
     def passlength(self,password):    #checks if the password is in the length given in configuration manager
@@ -314,5 +317,3 @@ class LogManager:
 class Presention:
     def InitFileToPresent(self):
         t=None
-
-
