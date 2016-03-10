@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginandRegister));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.LoginTab = new System.Windows.Forms.TabPage();
+            this.Cloudpicture = new System.Windows.Forms.PictureBox();
             this.SignIn = new System.Windows.Forms.Button();
             this.Loginlabel = new System.Windows.Forms.Label();
             this.Passwordlabel1 = new System.Windows.Forms.Label();
@@ -38,18 +39,17 @@
             this.Passwordtextbox1 = new System.Windows.Forms.TextBox();
             this.Usernametextbox1 = new System.Windows.Forms.TextBox();
             this.RegisterTab = new System.Windows.Forms.TabPage();
+            this.FolderCloudpicture = new System.Windows.Forms.PictureBox();
             this.Register = new System.Windows.Forms.Button();
             this.PasswordtextBox2 = new System.Windows.Forms.TextBox();
             this.UsernametextBox2 = new System.Windows.Forms.TextBox();
             this.Passwordlabel2 = new System.Windows.Forms.Label();
             this.Usernamelabel2 = new System.Windows.Forms.Label();
             this.Registerlabel = new System.Windows.Forms.Label();
-            this.Cloudpicture = new System.Windows.Forms.PictureBox();
-            this.FolderCloudpicture = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.LoginTab.SuspendLayout();
-            this.RegisterTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Cloudpicture)).BeginInit();
+            this.RegisterTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FolderCloudpicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,6 +79,15 @@
             this.LoginTab.TabIndex = 0;
             this.LoginTab.Text = "Login";
             this.LoginTab.UseVisualStyleBackColor = true;
+            // 
+            // Cloudpicture
+            // 
+            this.Cloudpicture.Image = ((System.Drawing.Image)(resources.GetObject("Cloudpicture.Image")));
+            this.Cloudpicture.Location = new System.Drawing.Point(268, 0);
+            this.Cloudpicture.Name = "Cloudpicture";
+            this.Cloudpicture.Size = new System.Drawing.Size(137, 105);
+            this.Cloudpicture.TabIndex = 6;
+            this.Cloudpicture.TabStop = false;
             // 
             // SignIn
             // 
@@ -153,6 +162,15 @@
             this.RegisterTab.Text = "Register";
             this.RegisterTab.UseVisualStyleBackColor = true;
             // 
+            // FolderCloudpicture
+            // 
+            this.FolderCloudpicture.Image = ((System.Drawing.Image)(resources.GetObject("FolderCloudpicture.Image")));
+            this.FolderCloudpicture.Location = new System.Drawing.Point(269, 0);
+            this.FolderCloudpicture.Name = "FolderCloudpicture";
+            this.FolderCloudpicture.Size = new System.Drawing.Size(136, 125);
+            this.FolderCloudpicture.TabIndex = 11;
+            this.FolderCloudpicture.TabStop = false;
+            // 
             // Register
             // 
             this.Register.Location = new System.Drawing.Point(129, 189);
@@ -206,24 +224,6 @@
             this.Registerlabel.TabIndex = 5;
             this.Registerlabel.Text = "Register";
             // 
-            // Cloudpicture
-            // 
-            this.Cloudpicture.Image = ((System.Drawing.Image)(resources.GetObject("Cloudpicture.Image")));
-            this.Cloudpicture.Location = new System.Drawing.Point(268, 0);
-            this.Cloudpicture.Name = "Cloudpicture";
-            this.Cloudpicture.Size = new System.Drawing.Size(137, 105);
-            this.Cloudpicture.TabIndex = 6;
-            this.Cloudpicture.TabStop = false;
-            // 
-            // FolderCloudpicture
-            // 
-            this.FolderCloudpicture.Image = ((System.Drawing.Image)(resources.GetObject("FolderCloudpicture.Image")));
-            this.FolderCloudpicture.Location = new System.Drawing.Point(269, 0);
-            this.FolderCloudpicture.Name = "FolderCloudpicture";
-            this.FolderCloudpicture.Size = new System.Drawing.Size(136, 125);
-            this.FolderCloudpicture.TabIndex = 11;
-            this.FolderCloudpicture.TabStop = false;
-            // 
             // LoginandRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,14 +232,15 @@
             this.Controls.Add(this.tabControl1);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LoginandRegister";
             this.Text = "Login and Register to dan\'s cloud";
             this.tabControl1.ResumeLayout(false);
             this.LoginTab.ResumeLayout(false);
             this.LoginTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Cloudpicture)).EndInit();
             this.RegisterTab.ResumeLayout(false);
             this.RegisterTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Cloudpicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FolderCloudpicture)).EndInit();
             this.ResumeLayout(false);
 

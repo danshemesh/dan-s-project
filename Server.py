@@ -11,6 +11,9 @@ import PIL.ImageFont
 import PIL.ImageOps
 import PIL.ImageDraw
 import os
+import sqlite3 as lite
+import sys
+import os .path
 #endregion
 
 BUFF = 1024
@@ -179,6 +182,9 @@ class Register:
         #clientsock.send("please enter a username: ")
         username=clientsock.recv(1024)
         """if username in database already the server will ask the client to enter a new username(will be added when therews a database)"""
+        #ans=DBManager().IsExists(username)
+        #while ans==True:
+            #username=clientsock.recv(1024)
         #clientsock.send("please enter a password: ")
         x=False
         while x==False:
@@ -188,9 +194,12 @@ class Register:
             if (PasswordPolicy().passlength(password) and PasswordPolicy().iscomplicated(password)):
                 clientsock.send("password is good")
                 x=True
-                return username
+                answer=DBManager().Connect(username,password)
+                if answer==True:
+                    return username
             else:
                 clientsock.send("password is not good please try again")
+
     def openfolder(self,username):
         newpath = r'C:\\Users\\User\\Desktop\\usersofcloud\\'+username
         if not os.path.exists(newpath):
@@ -299,8 +308,24 @@ class ProfileManager:
 
 
 class DBManager:
-    def Connect(self):
-        t=None
+
+    """def IsExists(self,username):
+        os.path.isfile('D:\\dan\'s project\\dan-s-project\\userandpass.db')
+        self.cur.execute("SELECT EXISTS(SELECT 1 FROM users WHERE username=(?)", (username))
+        if self.cur.fetchone():
+            print("Found!")
+            return False
+        else:
+            print("Not found...")
+            return True"""
+    def Connect(self,username,password):#enters a new user to databse1(of users and passwords
+        con = lite.connect('usersandpass.db')
+        self.cur = con.cursor()
+
+        self.cur.execute("CREATE TABLE if not exists users(username TEXT, password TEXT)")
+        with con:
+            self.cur.execute("INSERT INTO users VALUES (?, ?);", (username, password))
+        return True
     def Save(self):
         t=None
     def Delete(self):
