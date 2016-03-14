@@ -14,6 +14,8 @@ import os
 import sqlite3 as lite
 import sys
 import os .path
+import time
+import struct
 #endregion
 
 BUFF = 1024
@@ -39,6 +41,9 @@ class Communication:
             if "register"==data.rstrip():
                 r=Register()
                 username=r.Register(clientsock)
+                while username==False:
+                    clientsock.send(self.response("username not good please try again"))
+                    username = clientsock.recv(BUFF)
                 print "opening a new folder with username"
                 r.openfolder(username)
                 clientsock.send(self.response("a folder with your name opend in server"))
@@ -181,6 +186,8 @@ class Register:
     def Register(self,clientsock):
         #clientsock.send("please enter a username: ")
         username=clientsock.recv(1024)
+        if DBManager().isexists(username)==False:
+            return False
         """if username in database already the server will ask the client to enter a new username(will be added when therews a database)"""
         #ans=DBManager().IsExists(username)
         #while ans==True:
@@ -189,7 +196,7 @@ class Register:
         x=False
         while x==False:
             password=clientsock.recv(1024)
-            print  PasswordPolicy().passlength(password)
+            print PasswordPolicy().passlength(password)
             print PasswordPolicy().iscomplicated(password)
             if (PasswordPolicy().passlength(password) and PasswordPolicy().iscomplicated(password)):
                 clientsock.send("password is good")
@@ -197,6 +204,8 @@ class Register:
                 answer=DBManager().Connect(username,password)
                 if answer==True:
                     return username
+                else:
+                    return False
             else:
                 clientsock.send("password is not good please try again")
 
@@ -308,24 +317,32 @@ class ProfileManager:
 
 
 class DBManager:
+    #con = lite.connect('usersandpass.db')
+    #cur = con.cursor()
+    def isexists(self,username):
+        con = lite.connect('usersandpass.db')
+        cur = con.cursor()
 
-    """def IsExists(self,username):
-        os.path.isfile('D:\\dan\'s project\\dan-s-project\\userandpass.db')
-        self.cur.execute("SELECT EXISTS(SELECT 1 FROM users WHERE username=(?)", (username))
-        if self.cur.fetchone():
-            print("Found!")
-            return False
+        cur.execute("SELECT username FROM users WHERE username = ?", (username,))
+        data = cur.fetchall()
+        if len(data)==0:
+            return True
         else:
-            print("Not found...")
-            return True"""
+            return False
+
     def Connect(self,username,password):#enters a new user to databse1(of users and passwords
         con = lite.connect('usersandpass.db')
-        self.cur = con.cursor()
+        cur = con.cursor()
 
-        self.cur.execute("CREATE TABLE if not exists users(username TEXT, password TEXT)")
-        with con:
-            self.cur.execute("INSERT INTO users VALUES (?, ?);", (username, password))
-        return True
+        cur.execute("CREATE TABLE if not exists users(username TEXT, password TEXT)")
+        if DBManager().isexists(username):
+            with con:
+                cur.execute("INSERT INTO users VALUES (?, ?);", (username, password))
+            return True
+        else:
+            return  False
+
+
     def Save(self):
         t=None
     def Delete(self):
@@ -335,6 +352,26 @@ class DBManager:
     def Disconnect(self):
         t=None
 
+
+"""class Pipes:
+    f = open(r'\\.\pipe\connect', 'r+b', 0)
+    i = 1
+
+    while True:
+        s = 'Message[{0}]'.format(i)
+        i += 1
+
+        f.write(struct.pack('I', len(s)) + s)   # Write str length and str
+        f.seek(0)                               # EDIT: This is also necessary
+        print 'Wrote:', s
+
+        n = struct.unpack('I', f.read(4))[0]    # Read str length
+        s = f.read(n)                           # Read str
+        f.seek(0)                               # Important!!!
+        print 'Read:', s
+
+        time.sleep(2)
+"""
 class LogManager:
     def WriteAction(self):
         t=None

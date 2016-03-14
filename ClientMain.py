@@ -13,11 +13,16 @@ while msg!="Server response: close":
             a.client_socket.send("ack")
         elif msg=="password is not good please try again":
             a.registerpass()
+        elif msg=="Server response: username not good please try again":
+            a.registeru()
+            a.registerpass()
         else:
             a.sendmsg()
     else:
+
         a.registeru()
         a.registerpass()
+
 
     msg=a.recvmsg()
 
