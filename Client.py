@@ -35,13 +35,18 @@ class Communication():
         print "thank you for using dan's cloud"
         self.client_socket.close()
         #    return 'y'
-
+    def loginu(self):
+        msg=raw_input("please enter username: ")
+        self.client_socket.send(msg)
+    def loginpass(self):
+        msg=raw_input("please enter password: ")
+        self.client_socket.send(msg)
 
 class UserForm:
     def requestnewuser(self):
         t=None
-    def login(self):
-        t=None
+
+
 class Presentation:
     def recieveutemstoshow(self):
         t=None

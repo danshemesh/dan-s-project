@@ -47,6 +47,16 @@ class Communication:
                 print "opening a new folder with username"
                 r.openfolder(username)
                 clientsock.send(self.response("a folder with your name opend in server"))
+            if "login"==data.rstrip():
+                l=Login()
+                while username==False:
+                    clientsock.send(self.response("login username not good please try again"))
+                    username = clientsock.recv(BUFF)
+                while password==False:
+                    clientsock.send(self.response("login password not good please try again"))
+                    password = clientsock.recv(BUFF)
+                    answer=l.Login(username,password)
+
 
 
         clientsock.close()
@@ -180,8 +190,11 @@ class ConvertFiles:
 
 
 class Login:
-    def Login(self):
-        t=None
+    def Login(self,username,password):
+        if DBManager().isexists(username) and DBManager().isexists(password):
+            return True
+        else:
+            return False
 class Register:
     def Register(self,clientsock):
         #clientsock.send("please enter a username: ")
