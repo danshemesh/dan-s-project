@@ -49,9 +49,11 @@ class Communication:
                 clientsock.send(self.response("a folder with your name opend in server"))
             if "login"==data.rstrip():
                 l=Login()
+                username=False
                 while username==False:
                     clientsock.send(self.response("login username not good please try again"))
                     username = clientsock.recv(BUFF)
+                password=False
                 while password==False:
                     clientsock.send(self.response("login password not good please try again"))
                     password = clientsock.recv(BUFF)
