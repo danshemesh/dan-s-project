@@ -6,3 +6,12 @@ D:\dan's project\dan-s-project\dan's_login_gui\dan's_login_gui\bin\Debug\dan's_l
 D:\dan's project\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.exe
 D:\dan's project\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.pdb
 D:\dan's project\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.csprojResolveAssemblyReference.cache
+C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.exe
+C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.pdb
+C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\bin\Debug\dan's_login_gui.exe
+C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\bin\Debug\dan's_login_gui.pdb
+C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.csprojResolveAssemblyReference.cache
+C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan_s_login_gui.LoginandRegister.resources
+C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan_s_login_gui.Properties.Resources.resources
+C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.csproj.GenerateResource.Cache
+C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan_s_login_gui.Dan_s_cloud_gui.resources

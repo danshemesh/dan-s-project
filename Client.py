@@ -53,12 +53,25 @@ class Presentation:
     def showfiles(self):
         t=None
 class ClientFilesManager:
+    def uploadfile(self):
+        msg=raw_input("enter username for file upload: ")
+        msg2=raw_input("enter a file name to upload: ")
+        msg3=msg+'#'+msg2
+        print msg3
+        Communication().client_socket.send(msg3)
     def syncfile(self):
         t=None
     def editfile(self):
         t=None
     def deletefile(self):
-        t=None
+        print '2'
+        msg=raw_input("enter username for file upload: ")
+        msg2=raw_input("enter a file name to upload: ")
+        msg3=msg+'#'+msg2
+        print '3'
+        print msg3
+        Communication().client_socket.send(msg3)
+        print '4'
     def copyfile(self):
         t=None
 class ConfigurationMamanager:

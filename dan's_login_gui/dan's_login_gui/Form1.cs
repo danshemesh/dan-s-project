@@ -13,33 +13,39 @@ namespace dan_s_login_gui
 {
     public partial class LoginandRegister : Form
     {
+        public string my_uid;
+        public string firstname;
+        public string lastname;
+        public SocketClient sock_obj;
         public LoginandRegister()
         {
             InitializeComponent();
-            CreateMyPasswordTextBox();
+            //CreateMyPasswordTextBox();
+            SocketClient sock_obj = new SocketClient();
+            this.sock_obj = sock_obj;
         }
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
 
-        public void CreateMyPasswordTextBox()
-        {
-            // Create an instance of the TextBox control.
+        //public void CreateMyPasswordTextBox()
+        //{
+        //    // Create an instance of the TextBox control.
 
-            // Set the maximum length of text in the control to eight.
-            Passwordtextbox1.MaxLength = 14;
-            PasswordtextBox2.MaxLength = 14;
-            // Assign the asterisk to be the password character.
-            Passwordtextbox1.PasswordChar = '*';
-            PasswordtextBox2.PasswordChar = '*';
-            // Change all text entered to be lowercase.
-            Passwordtextbox1.CharacterCasing = CharacterCasing.Lower;
-            PasswordtextBox2.CharacterCasing = CharacterCasing.Lower;
-            // Align the text in the center of the TextBox control.
-            Passwordtextbox1.TextAlign = HorizontalAlignment.Center;
-            PasswordtextBox2.TextAlign = HorizontalAlignment.Center;
-        }
+        //    // Set the maximum length of text in the control to eight.
+        //    Passwordtextbox1.MaxLength = 14;
+        //    PasswordtextBox2.MaxLength = 14;
+        //    // Assign the asterisk to be the password character.
+        //    Passwordtextbox1.PasswordChar = '*';
+        //    PasswordtextBox2.PasswordChar = '*';
+        //    // Change all text entered to be lowercase.
+        //    Passwordtextbox1.CharacterCasing = CharacterCasing.Lower;
+        //    PasswordtextBox2.CharacterCasing = CharacterCasing.Lower;
+        //    // Align the text in the center of the TextBox control.
+        //    Passwordtextbox1.TextAlign = HorizontalAlignment.Center;
+        //    PasswordtextBox2.TextAlign = HorizontalAlignment.Center;
+        //}
         //private void Register()
         //{
         //    // Open the named pipe.
@@ -78,7 +84,57 @@ namespace dan_s_login_gui
         //    server.Close();
         //    server.Dispose();
         //}
+        private void UserSignIn(string username, string password)
+        {
+            if (username == "")
+            {
+                MessageBox.Show("Please enter username");
+                this.Show();
+            }
+            else if (password == "")
+            {
+                MessageBox.Show("Please enter password");
+                this.Show();
+            }
+            else
+            {
 
+                //string hashed_password = sha256(password);
+                //send username and password to python and checks if correct
+                string info = "login#" + username + "#" + password;
+
+
+                this.sock_obj.StartClient();
+                this.sock_obj.Send(info);
+                string message_to_split = this.sock_obj.Recv();
+                string message = message_to_split.Split('#')[0];
+                if (message_to_split.Split('#')[1] != "0")
+                {
+                    this.my_uid = message_to_split.Split('#')[2];
+                    this.firstname = message_to_split.Split('#')[1];
+                    this.lastname = message_to_split.Split('#')[3];
+                    //MessageBox.Show(my_uid + firstname + lastname);
+                }
+                sock_obj.CloseClient();
+
+                //if receives true then send the user to the next gui.
+                if (message == "Signed in")
+                {
+                    string user_info = this.my_uid + "#" + this.firstname + "#" + this.lastname;
+                    Dan_s_cloud_gui form = new Dan_s_cloud_gui(user_info);
+                    form.Show();
+                }
+                else
+                {
+
+                    MessageBox.Show("incorrect password or username");
+                    this.Show();
+                }
+
+
+
+            }
+        }
 
         private void label1_Click_1(object sender, EventArgs e)
         {
@@ -90,9 +146,26 @@ namespace dan_s_login_gui
 
         }
 
-        
+        private void Usernametextbox1_TextChanged(object sender, EventArgs e)
+        {
 
-        
+        }
+
+        private void Passwordtextbox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Register_Click(object sender, EventArgs e)
+        {
+            //registerusername.Text
+              //registerpassword.Text  
+        }
+
+        private void LoginandRegister_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

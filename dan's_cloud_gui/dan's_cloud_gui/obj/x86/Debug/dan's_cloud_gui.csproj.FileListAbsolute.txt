@@ -5,3 +5,5 @@ D:\dan's project\dan-s-project\dan's_cloud_gui\dan's_cloud_gui\obj\x86\Debug\dan
 D:\dan's project\dan-s-project\dan's_cloud_gui\dan's_cloud_gui\obj\x86\Debug\dan's_cloud_gui.csproj.GenerateResource.Cache
 D:\dan's project\dan-s-project\dan's_cloud_gui\dan's_cloud_gui\obj\x86\Debug\dan's_cloud_gui.exe
 D:\dan's project\dan-s-project\dan's_cloud_gui\dan's_cloud_gui\obj\x86\Debug\dan's_cloud_gui.pdb
+C:\Users\dan\Desktop\dan-s-project\dan's_cloud_gui\dan's_cloud_gui\obj\x86\Debug\dan's_cloud_gui.exe
+C:\Users\dan\Desktop\dan-s-project\dan's_cloud_gui\dan's_cloud_gui\obj\x86\Debug\dan's_cloud_gui.pdb

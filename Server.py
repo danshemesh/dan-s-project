@@ -44,20 +44,64 @@ class Communication:
                 while username==False:
                     clientsock.send(self.response("username not good please try again"))
                     username = clientsock.recv(BUFF)
+                """info = clientsock.Recv(BUFF)
+                info = info.split("#")
+                state = info[0]
+                print state
+                username=r.Register(clientsock)
+
+                username = info[1]
+                password = info[2]
+
+                uname_exists = DBManager().UnameExists(username)[0]
+
+                if not uname_exists:
+                    DBManager().AddInfo(username, password)
+                    message = "Signed up"
+                    self.Send(Communication.response(message))
+                else:
+                    message = "username exists"
+                    self.Send(message)#name not good please try again"))
+                    #username = clientsock.recv(BUFF)"""
                 print "opening a new folder with username"
                 r.openfolder(username)
                 clientsock.send(self.response("a folder with your name opend in server"))
-            if "login"==data.rstrip():
+            elif "login"==data.rstrip():
                 l=Login()
-                username=False
-                while username==False:
-                    clientsock.send(self.response("login username not good please try again"))
-                    username = clientsock.recv(BUFF)
-                password=False
-                while password==False:
-                    clientsock.send(self.response("login password not good please try again"))
-                    password = clientsock.recv(BUFF)
-                    answer=l.Login(username,password)
+                username = clientsock.recv(BUFF)
+                clientsock.send(self.response("username recived"))
+                password = clientsock.recv(BUFF)
+                answer=l.Login(username,password)
+                if answer:
+                    clientsock.send("login good")
+                else:
+                    clientsock.send("login not good")
+            if "uploadfiles"==data.rstrip():
+                print '1'
+                u=FilesManager()
+                clientsock.send(self.response("uploadfiles"))
+                print '2'
+                usernamefilename = clientsock.recv(BUFF)
+                print '3'
+                print usernamefilename
+                a=usernamefilename.split('#')
+                print '5'
+                print a
+                username=a[0]
+                filename=a[1]
+                u.uploadfiles(username,filename)
+                print '6'
+            if "deletfile"==data.rstrip():
+                clientsock.send(self.response("deletefile"))
+                usernamefilename=clientsock.recv(BUFF)
+                print usernamefilename
+                a=usernamefilename.split('#')
+                user=a[0]
+                name=a[1]
+                u.deletefile(user,name)
+
+
+
 
 
 
@@ -129,6 +173,20 @@ class SessionManager:
             print session
             print SessionManager.open_client_sockets[session]
 
+class FilesManager:
+    def uploadfile(self,username,name):
+        print '7'
+        pathtosave = r'C:\\Users\\dan\\Desktop\\usersofcloud\\'+username+'\\myfiles'
+        print '8'
+        filename = os.path.join(pathtosave,name)
+        filename=open(filename,'w')
+        print '9'
+    def deletefile(self,username,name):
+        pathtodel = r'C:\\Users\\dan\\Desktop\\usersofcloud\\'+username+'\\myfiles'
+        #filename = 'forcing{0}damping{1}omega{2}set2.png'.format(forcing, damping, omega)
+        filename = os.path.join(pathtodel,name)
+        os.remove(filename)
+
 class ConvertFiles:
     def txtconvert(self):
         t=None
@@ -193,7 +251,7 @@ class ConvertFiles:
 
 class Login:
     def Login(self,username,password):
-        if DBManager().isexists(username) and DBManager().isexists(password):
+        if DBManager().isloginexsits(username,password):
             return True
         else:
             return False
@@ -201,8 +259,8 @@ class Register:
     def Register(self,clientsock):
         #clientsock.send("please enter a username: ")
         username=clientsock.recv(1024)
-        if DBManager().isexists(username)==False:
-            return False
+        """if DBManager().isexists(username)==False:
+            return False"""
         """if username in database already the server will ask the client to enter a new username(will be added when therews a database)"""
         #ans=DBManager().IsExists(username)
         #while ans==True:
@@ -225,11 +283,11 @@ class Register:
                 clientsock.send("password is not good please try again")
 
     def openfolder(self,username):
-        newpath = r'C:\\Users\\User\\Desktop\\usersofcloud\\'+username
+        newpath = r'C:\\Users\\dan\\Desktop\\usersofcloud\\'+username
         if not os.path.exists(newpath):
             os.makedirs(newpath)
-            secondpath=r'C:\\Users\\User\\Desktop\\usersofcloud\\'+username+'\\myfiles'
-            thirdpath=r'C:\\Users\\User\\Desktop\\usersofcloud\\'+username+'\\sharedfiles'
+            secondpath=r'C:\\Users\\dan\\Desktop\\usersofcloud\\'+username+'\\myfiles'
+            thirdpath=r'C:\\Users\\dan\\Desktop\\usersofcloud\\'+username+'\\sharedfiles'
             os.makedirs(secondpath)
             os.makedirs(thirdpath)
 
@@ -339,23 +397,57 @@ class DBManager:
         cur = con.cursor()
 
         cur.execute("SELECT username FROM users WHERE username = ?", (username,))
-        data = cur.fetchall()
-        if len(data)==0:
+        data = cur.fetcone()
+        if data!=None:
             return True
         else:
             return False
+    def isloginexsits(self , username,password):
+        con = lite.connect('usersandpass.db')
+        cur = con.cursor()
+
+        cur.execute("SELECT username FROM users WHERE username = ? and password =?", (username,password))
+        data = cur.fetchone()
+        if data==None:
+            return False
+        else:
+            return True
+    def ReadAllRows(self):
+        conn = lite.connect('usersandpass.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM UserInfo")
+        rows = c.fetchall()
+        temp = rows
+        rows = []
+        for row in temp:
+            data_string = str(row[0]) + "@" + row[1][1:-1] + "@" + row[2][1:-1] + \
+                "@" + row[3][1:-1] + "@" + row[4][1:-1]
+            ##uid@fname@lname@uname#.....
+            rows.append(data_string)
+
+        conn.commit()
+        conn.close()
+        return rows
+
+    def UnameExists(username):
+        rows = DBManager().ReadAllRows()
+        for row in rows:
+            if username in row:
+                return (True, row)
+        return (False, )
+
 
     def Connect(self,username,password):#enters a new user to databse1(of users and passwords
         con = lite.connect('usersandpass.db')
         cur = con.cursor()
 
         cur.execute("CREATE TABLE if not exists users(username TEXT, password TEXT)")
-        if DBManager().isexists(username):
-            with con:
-                cur.execute("INSERT INTO users VALUES (?, ?);", (username, password))
-            return True
-        else:
-            return  False
+        #if DBManager().isexists(username):
+        with con:
+            cur.execute("INSERT INTO users VALUES (?, ?);", (username, password))
+            #return True
+        #else:
+        return  True
 
 
     def Save(self):
