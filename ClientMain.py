@@ -29,20 +29,25 @@ while msg != "Server response: close":
         msg=a.client_socket.recv(1024)
         print "recieved after pass"
         print msg
-        if msg == "Server response: login username not good please try again":
+        if msg=="login not good":
+            a.client_socket.send("login")
+        elif msg=="login good":
+            a.sendmsg()
+        """if msg == "Server response: login username not good please try again":
             a.loginu()
         elif msg == "Server response: login password not good please try again":
-            a.loginpass()
+            a.loginpass()"""
 
     elif msg == "Server response: uploadfiles":
         print '1'
         u.uploadfile()
         print '2'
+        msg=a.client_socket.recv(1024)
     elif msg == "Server response: deletefile":
         u.deletefile()
     else:
         print "unknown msg"
-
+        a.sendmsg()
 
     msg = a.recvmsg()
 
@@ -59,4 +64,3 @@ while true:
             Client.Presentation().showfiles()
         elif x=='y':
             true=False"""
-

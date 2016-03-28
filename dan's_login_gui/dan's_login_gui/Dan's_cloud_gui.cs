@@ -29,21 +29,21 @@ namespace dan_s_login_gui
             this.sock_obj = sock_obj;
             sendfiles.Enabled = false;
         }
-        private void browse2lock_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog filestosave = new OpenFileDialog();
-            filestosave.ShowDialog();
-            filestosave.InitialDirectory = @"C:\";
-            filestosave.Title = "save Files";
-            string filename = "";
-            filename += filestosave.FileName;
-            this.file_to_save = filename;
-            filename = ChosenFileView.Text;
-            ChosenFileView.Show();
+        //private void browse2lock_Click(object sender, EventArgs e)
+        //{
+        //    OpenFileDialog filestosave = new OpenFileDialog();
+        //    filestosave.ShowDialog();
+        //    filestosave.InitialDirectory = @"C:\";
+        //    filestosave.Title = "save Files";
+        //    string filename = "";
+        //    filename += filestosave.FileName;
+        //    this.file_to_save = filename;
+        //    filename = ChosenFileView.Text;
+        //    ChosenFileView.Show();
 
 
-            this.sock_obj.StartClient();
-            this.sock_obj.Send("save");
-        }
+        //    this.sock_obj.StartClient();
+        //    this.sock_obj.Send("save");
+        //}
     }
 }

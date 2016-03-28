@@ -13,8 +13,8 @@ namespace dan_s_login_gui
 {
     public partial class LoginandRegister : Form
     {
-        public string my_uid;
-        public string firstname;
+        public string reuname ;
+        public string regpass;
         public string lastname;
         public SocketClient sock_obj;
         public LoginandRegister()
@@ -108,19 +108,19 @@ namespace dan_s_login_gui
                 this.sock_obj.Send(info);
                 string message_to_split = this.sock_obj.Recv();
                 string message = message_to_split.Split('#')[0];
-                if (message_to_split.Split('#')[1] != "0")
-                {
-                    this.my_uid = message_to_split.Split('#')[2];
-                    this.firstname = message_to_split.Split('#')[1];
-                    this.lastname = message_to_split.Split('#')[3];
-                    //MessageBox.Show(my_uid + firstname + lastname);
-                }
-                sock_obj.CloseClient();
+                //if (message_to_split.Split('#')[1] != "0")
+                //{
+                //    this.my_uid = message_to_split.Split('#')[2];
+                //    this.firstname = message_to_split.Split('#')[1];
+                //    this.lastname = message_to_split.Split('#')[3];
+                //    //MessageBox.Show(my_uid + firstname + lastname);
+                //}
+                //sock_obj.CloseClient();
 
                 //if receives true then send the user to the next gui.
                 if (message == "Signed in")
                 {
-                    string user_info = this.my_uid + "#" + this.firstname + "#" + this.lastname;
+                    string user_info = this.loginusername.Text + "#" + this.loginpassword.Text;
                     Dan_s_cloud_gui form = new Dan_s_cloud_gui(user_info);
                     form.Show();
                 }
@@ -143,8 +143,56 @@ namespace dan_s_login_gui
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (loginusername.Text == "")
+            {
+                MessageBox.Show("Please enter username");
+                this.Show();
+            }
+            else if (loginpassword.Text == "")
+            {
+                MessageBox.Show("Please enter password");
+                this.Show();
+            }
+            else
+            {
 
-        }
+                //string hashed_password = sha256(password);
+                //send username and password to python and checks if correct
+                string info = "login#" + loginusername + "#" + loginpassword;
+
+
+                this.sock_obj.StartClient();
+                this.sock_obj.Send(info);
+                string message_to_split = this.sock_obj.Recv();
+                string message = message_to_split.Split('#')[0];
+                if (message_to_split.Split('#')[1] != "0")
+                {
+                    this.loginusername.Text = message_to_split.Split('#')[2];
+                    this.loginpassword.Text = message_to_split.Split('#')[1];
+                    this.lastname = message_to_split.Split('#')[3];
+                    //MessageBox.Show(my_uid + firstname + lastname);
+                }
+                sock_obj.CloseClient();
+
+                //if receives true then send the user to the next gui.
+                if (message == "Signed in")
+                {
+                    string user_info = this.loginusername + "#" + this.loginpassword;
+                    Dan_s_cloud_gui form = new Dan_s_cloud_gui(user_info);
+                    form.Show();
+                }
+                else
+                {
+
+                    MessageBox.Show("incorrect password or username");
+                    this.Show();
+                }
+
+
+
+            }
+        
+    }
 
         private void Usernametextbox1_TextChanged(object sender, EventArgs e)
         {
@@ -158,8 +206,22 @@ namespace dan_s_login_gui
 
         private void Register_Click(object sender, EventArgs e)
         {
-            //registerusername.Text
-              //registerpassword.Text  
+
+            string regu = registerusername.Text;
+            string regpass = registerpassword.Text;
+            string info = "register#" + regu + "#" + regpass;
+            this.sock_obj.StartClient();
+            this.sock_obj.Send(info);
+
+            string message = this.sock_obj.Recv();
+            if (message == "registerd")
+            {
+                MessageBox.Show("got registerd, hello "+regu+"!");
+            }
+            
+
+
+            this.sock_obj.CloseClient();
         }
 
         private void LoginandRegister_Load(object sender, EventArgs e)

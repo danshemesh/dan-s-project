@@ -74,14 +74,19 @@ class Communication:
                 answer=l.Login(username,password)
                 if answer:
                     clientsock.send("login good")
+                    print "client signd in"
                 else:
                     clientsock.send("login not good")
-            if "uploadfiles"==data.rstrip():
+                    print "client not signd in"
+            elif "uploadfiles"==data.rstrip():
                 print '1'
                 u=FilesManager()
                 clientsock.send(self.response("uploadfiles"))
                 print '2'
-                usernamefilename = clientsock.recv(BUFF)
+                username=clientsock.recv(1024)
+                clientsock.send("got username")
+                u.recvanduploadfile(clientsock,username)
+                """filename = clientsock.recv(BUFF)
                 print '3'
                 print usernamefilename
                 a=usernamefilename.split('#')
@@ -89,9 +94,11 @@ class Communication:
                 print a
                 username=a[0]
                 filename=a[1]
-                u.uploadfiles(username,filename)
-                print '6'
-            if "deletfile"==data.rstrip():
+                ans=u.uploadfile(username,filename)
+                if ans=='ok':
+                    clientsock.send("file uploaded")
+                print '6'"""
+            elif "deletfile"==data.rstrip():
                 clientsock.send(self.response("deletefile"))
                 usernamefilename=clientsock.recv(BUFF)
                 print usernamefilename
@@ -176,13 +183,29 @@ class SessionManager:
 class FilesManager:
     def uploadfile(self,username,name):
         print '7'
-        pathtosave = r'C:\\Users\\dan\\Desktop\\usersofcloud\\'+username+'\\myfiles'
+        pathtosave = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles'
         print '8'
         filename = os.path.join(pathtosave,name)
         filename=open(filename,'w')
         print '9'
+        return 'ok'
+    def recvanduploadfile(self,clientsock,username):
+        pathtosave = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles'
+        data = clientsock.recv(1024)
+        fulldata = data
+        while True:
+            data = clientsock.recv(1024)
+            fulldata += data
+            if len(data) == 0:
+                break
+
+        filename, file_data = fulldata.split("@",1)
+
+        with open(pathtosave+filename, "wb") as f:
+            f.write(file_data)
+
     def deletefile(self,username,name):
-        pathtodel = r'C:\\Users\\dan\\Desktop\\usersofcloud\\'+username+'\\myfiles'
+        pathtodel = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles'
         #filename = 'forcing{0}damping{1}omega{2}set2.png'.format(forcing, damping, omega)
         filename = os.path.join(pathtodel,name)
         os.remove(filename)
@@ -283,11 +306,11 @@ class Register:
                 clientsock.send("password is not good please try again")
 
     def openfolder(self,username):
-        newpath = r'C:\\Users\\dan\\Desktop\\usersofcloud\\'+username
+        newpath = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username
         if not os.path.exists(newpath):
             os.makedirs(newpath)
-            secondpath=r'C:\\Users\\dan\\Desktop\\usersofcloud\\'+username+'\\myfiles'
-            thirdpath=r'C:\\Users\\dan\\Desktop\\usersofcloud\\'+username+'\\sharedfiles'
+            secondpath=r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles'
+            thirdpath=r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\sharedfiles'
             os.makedirs(secondpath)
             os.makedirs(thirdpath)
 

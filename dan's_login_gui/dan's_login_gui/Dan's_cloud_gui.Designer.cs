@@ -31,9 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dan_s_cloud_gui));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.myfilestab = new System.Windows.Forms.TabPage();
-            this.sharedfilestab = new System.Windows.Forms.TabPage();
-            this.sendfiles = new System.Windows.Forms.Button();
             this.savefiles = new System.Windows.Forms.Button();
+            this.sendfiles = new System.Windows.Forms.Button();
+            this.sharedfilestab = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.myfilestab.SuspendLayout();
             this.SuspendLayout();
@@ -60,15 +60,14 @@
             this.myfilestab.Text = "myfiles";
             this.myfilestab.UseVisualStyleBackColor = true;
             // 
-            // sharedfilestab
+            // savefiles
             // 
-            this.sharedfilestab.Location = new System.Drawing.Point(4, 25);
-            this.sharedfilestab.Name = "sharedfilestab";
-            this.sharedfilestab.Padding = new System.Windows.Forms.Padding(3);
-            this.sharedfilestab.Size = new System.Drawing.Size(1303, 495);
-            this.sharedfilestab.TabIndex = 1;
-            this.sharedfilestab.Text = "sharedfiles";
-            this.sharedfilestab.UseVisualStyleBackColor = true;
+            this.savefiles.Location = new System.Drawing.Point(1136, 6);
+            this.savefiles.Name = "savefiles";
+            this.savefiles.Size = new System.Drawing.Size(164, 30);
+            this.savefiles.TabIndex = 1;
+            this.savefiles.Text = "save files";
+            this.savefiles.UseVisualStyleBackColor = true;
             // 
             // sendfiles
             // 
@@ -79,14 +78,15 @@
             this.sendfiles.Text = "share files";
             this.sendfiles.UseVisualStyleBackColor = true;
             // 
-            // savefiles
+            // sharedfilestab
             // 
-            this.savefiles.Location = new System.Drawing.Point(1136, 6);
-            this.savefiles.Name = "savefiles";
-            this.savefiles.Size = new System.Drawing.Size(164, 30);
-            this.savefiles.TabIndex = 1;
-            this.savefiles.Text = "save files";
-            this.savefiles.UseVisualStyleBackColor = true;
+            this.sharedfilestab.Location = new System.Drawing.Point(4, 25);
+            this.sharedfilestab.Name = "sharedfilestab";
+            this.sharedfilestab.Padding = new System.Windows.Forms.Padding(3);
+            this.sharedfilestab.Size = new System.Drawing.Size(1303, 495);
+            this.sharedfilestab.TabIndex = 1;
+            this.sharedfilestab.Text = "sharedfiles";
+            this.sharedfilestab.UseVisualStyleBackColor = true;
             // 
             // Dan_s_cloud_gui
             // 
