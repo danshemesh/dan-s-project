@@ -101,7 +101,7 @@
             this.SignInbutton.TabIndex = 5;
             this.SignInbutton.Text = "Sign In";
             this.SignInbutton.UseVisualStyleBackColor = true;
-            this.SignInbutton.Click += new System.EventHandler(this.button1_Click);
+            this.SignInbutton.Click += new System.EventHandler(this.SignInbutton_Click);
             // 
             // Loginlabel
             // 

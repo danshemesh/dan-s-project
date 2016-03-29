@@ -95,10 +95,30 @@ namespace dan_s_login_gui
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SignInbutton_Click(object sender, EventArgs e)
         {
+            if (loginusername.Text == "")
+            {
+                MessageBox.Show("Please enter username");
+                this.Show();
+            }
+            else if (loginpassword.Text == "")
+            {
+                MessageBox.Show("Please enter password");
+                this.Show();
+            }
+            else
+                client.Send("login");
+                client.Send(loginusername.Text);
+                Thread.Sleep(1000);
+                client.Send(loginpassword.Text);
+                registerusername.Text = "";
+                registerpassword.Text = "";
+                Dan_s_cloud_gui form = new Dan_s_cloud_gui();
+                form.Show();
+            this.Hide();
             
-    }
+        }
 
         private void Usernametextbox1_TextChanged(object sender, EventArgs e)
         {

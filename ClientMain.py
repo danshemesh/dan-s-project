@@ -42,13 +42,13 @@ while msg != "Server response: close":
     elif msg == "password is not good please try again":
         a.registerpass()
     elif msg == "Server response: username not good please try again":
-        a.registeru()
-        a.registerpass()
+        a.registeru(clientsock)
+        a.registerpass(clientsock)
     elif msg == "Server response: login":
-        a.loginu()
+        a.loginu(clientsock)
         msg=a.client_socket.recv(1024)
         print msg
-        a.loginpass()
+        a.loginpass(clientsock)
         print "after pass"
         msg=a.client_socket.recv(1024)
         print "recieved after pass"
@@ -56,7 +56,7 @@ while msg != "Server response: close":
         if msg=="login not good":
             a.client_socket.send("login")
         elif msg=="login good":
-            a.sendmsg()
+            """a.sendmsg()"""
         """if msg == "Server response: login username not good please try again":
             a.loginu()
         elif msg == "Server response: login password not good please try again":
@@ -71,7 +71,7 @@ while msg != "Server response: close":
         u.deletefile()
     else:
         print "unknown msg"
-        a.sendmsg()
+        #a.sendmsg()
 
     msg = a.recvmsg()
 
