@@ -2,8 +2,25 @@
 import socket
 import  os
 #endregion
-
+host='0.0.0.0'
 Port=1237
+port2=1238
+class ServerComGUI:
+    def listener(self):
+        ADDR = (host, port2)
+        serversock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        serversock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        serversock.bind(ADDR)
+        serversock.listen(1)
+        clientsock, addr = serversock.accept()
+        print 'waiting for connection... listening on port', port2
+        print '...connected from:', addr
+        a=Communication()
+        msg=clientsock.recv(1024)
+        print msg
+        a.registeru()
+        a.registerpass()
+
 
 class Communication():
     def __init__(self):
@@ -18,11 +35,13 @@ class Communication():
     def recvmsg(self):
         response=self.client_socket.recv(1024)
         return response
-    def registeru(self):
-        msg=raw_input("please enter username: ")
+    def registeru(self,clientsock):
+        msg=clientsock.recv(1024)
+        print msg
         self.client_socket.send(msg)
-    def registerpass(self):
-        msg=raw_input("please enter password: ")
+    def registerpass(self,clientsock):
+        msg=clientsock.recv(1024)
+        print msg
         self.client_socket.send(msg)
     def disconnect(self):
         #print "are you sure you want to disconnect? y/n"

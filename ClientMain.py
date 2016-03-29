@@ -1,18 +1,42 @@
 import Client
+import socket
 import time
 print "welcone new client to dan's cloud"
 print "you can use our of cloud saving and sharing from everywhere"
 a=Client.Communication()
-a.sendmsg()
+port2=1238
+host='0.0.0.0'
+#listen=Client.ServerComGUI().listener()
+ADDR = (host, port2)
+serversock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+serversock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+serversock.bind(ADDR)
+serversock.listen(1)
+clientsock, addr = serversock.accept()
+print 'waiting for connection... listening on port', port2
+print '...connected from:', addr
+#a=Communication()
+msg=clientsock.recv(1024)
+print msg
+a.client_socket.send(msg)
+msg=a.recvmsg()
+#a.registeru()
+#a.registerpass()
+#a.sendmsg()
 u=Client.ClientFilesManager()
 
-msg=a.recvmsg()
+#msg=a.recvmsg()
+print msg
 #time.sleep(1)
 while msg != "Server response: close":
     print msg
     if msg == "Server response: register":
-        a.registeru()
-        a.registerpass()
+        print 1
+        a.registeru(clientsock)
+        print 2
+
+        a.registerpass(clientsock)
+        print 3
     elif msg == "password is good":
         a.client_socket.send("ack")
     elif msg == "password is not good please try again":

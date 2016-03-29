@@ -212,6 +212,7 @@
             this.registerusername.Name = "registerusername";
             this.registerusername.Size = new System.Drawing.Size(132, 22);
             this.registerusername.TabIndex = 8;
+            this.registerusername.TextChanged += new System.EventHandler(this.registerusername_TextChanged);
             // 
             // registerpasslabel
             // 

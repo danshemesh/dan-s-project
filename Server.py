@@ -41,6 +41,7 @@ class Communication:
             if "register"==data.rstrip():
                 r=Register()
                 username=r.Register(clientsock)
+                print username
                 while username==False:
                     clientsock.send(self.response("username not good please try again"))
                     username = clientsock.recv(BUFF)
@@ -202,7 +203,7 @@ class FilesManager:
         filename, file_data = fulldata.split("@",1)
 
         with open(pathtosave+filename, "wb") as f:
-            f.write(file_data)
+            f.write()
 
     def deletefile(self,username,name):
         pathtodel = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles'

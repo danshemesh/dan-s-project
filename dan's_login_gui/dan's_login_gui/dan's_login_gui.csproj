@@ -61,6 +61,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SocketClient.cs" />
+    <Compile Include="SOCKETHANDLER.cs" />
     <EmbeddedResource Include="Dan%27s_cloud_gui.resx">
       <DependentUpon>Dan%27s_cloud_gui.cs</DependentUpon>
     </EmbeddedResource>
