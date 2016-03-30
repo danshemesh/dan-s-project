@@ -193,20 +193,17 @@ class FilesManager:
     def recvanduploadfile(self,clientsock,username):
         pathtosave = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles'
         data = clientsock.recv(1024)
-        fulldata = data
-        while True:
-            data = clientsock.recv(1024)
-            fulldata += data
-            if len(data) == 0:
-                break
+        filename,length = data.split("@",1)
+        clientsock.send("ack")
+        length=int(length)
+        fulldata= clientsock.recv(length)
+        filename=os.path.basename(filename)
 
-        filename, file_data = fulldata.split("@",1)
-
-        with open(pathtosave+filename, "wb") as f:
-            f.write()
+        with open(os.path.join(pathtosave,filename), "wb") as f:
+            f.write(fulldata)
 
     def deletefile(self,username,name):
-        pathtodel = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles'
+        pathtodel = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles\\'
         #filename = 'forcing{0}damping{1}omega{2}set2.png'.format(forcing, damping, omega)
         filename = os.path.join(pathtodel,name)
         os.remove(filename)

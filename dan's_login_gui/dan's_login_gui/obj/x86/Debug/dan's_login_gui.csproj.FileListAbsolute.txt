@@ -14,3 +14,4 @@ C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug
 C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan_s_login_gui.Properties.Resources.resources
 C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.csproj.GenerateResource.Cache
 C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan_s_login_gui.Dan_s_cloud_gui.resources
+C:\Users\dan\Desktop\dan-s-project\dan's_login_gui\dan's_login_gui\obj\x86\Debug\dan's_login_gui.csprojResolveAssemblyReference.cache

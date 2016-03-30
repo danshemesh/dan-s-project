@@ -65,7 +65,11 @@ while msg != "Server response: close":
 
     elif msg == "Server response: uploadfiles":
         print '1'
-        u.uploadfile()
+        clientsock.send("ack")
+        username=clientsock.recv(1024)
+        clientsock.send("ack")
+        filename=clientsock.recv(1024)
+        u.uploadfile(username,filename,a)
         print '2'
         msg=a.client_socket.recv(1024)
     elif msg == "Server response: deletefile":

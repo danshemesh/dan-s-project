@@ -5,7 +5,8 @@ import  os
 host='0.0.0.0'
 Port=1237
 port2=1238
-class ServerComGUI:
+
+"""class ServerComGUI:
     def listener(self):
         ADDR = (host, port2)
         serversock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -19,7 +20,7 @@ class ServerComGUI:
         msg=clientsock.recv(1024)
         print msg
         a.registeru()
-        a.registerpass()
+        a.registerpass()"""
 
 
 class Communication():
@@ -61,6 +62,9 @@ class Communication():
         msg=clientsock.recv(1024)
         self.client_socket.send(msg)
 
+
+
+
 class UserForm:
     def requestnewuser(self):
         t=None
@@ -72,19 +76,19 @@ class Presentation:
     def showfiles(self):
         t=None
 class ClientFilesManager:
-    def uploadfile(self):
-        username=raw_input("enter username for file upload: ")
+    def uploadfile(self,username,filename,c):
 
-        Communication().client_socket.send(username)
-        #print msg
-        filename=raw_input("enter a file name to upload: ")
+        c.client_socket.send(username)
+        #print ms
         #msg3=msg+'#'+msg2
         #print msg3
-
+        a=c.client_socket.recv(1024)
         f=open(filename,'rb')
         size=os.path.getsize(filename)
-        content=f.read(4)
-        Communication().client_socket.send(filename + "@" + content,username)
+        content=f.read(size)
+        c.client_socket.send(filename + "@"+str(size))
+        c.client_socket.recv(1024)
+        c.client_socket.send(content)
     def syncfile(self):
         t=None
     def editfile(self):

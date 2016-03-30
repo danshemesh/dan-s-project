@@ -34,7 +34,8 @@
             this.savefiles = new System.Windows.Forms.Button();
             this.sendfiles = new System.Windows.Forms.Button();
             this.sharedfilestab = new System.Windows.Forms.TabPage();
-            this.savefile = new System.Windows.Forms.SaveFileDialog();
+            this.pathtextbox = new System.Windows.Forms.TextBox();
+            this.savefile2 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.myfilestab.SuspendLayout();
             this.SuspendLayout();
@@ -51,6 +52,7 @@
             // 
             // myfilestab
             // 
+            this.myfilestab.Controls.Add(this.pathtextbox);
             this.myfilestab.Controls.Add(this.savefiles);
             this.myfilestab.Controls.Add(this.sendfiles);
             this.myfilestab.Location = new System.Drawing.Point(4, 25);
@@ -69,6 +71,7 @@
             this.savefiles.TabIndex = 1;
             this.savefiles.Text = "save files";
             this.savefiles.UseVisualStyleBackColor = true;
+            this.savefiles.Click += new System.EventHandler(this.savefiles_Click);
             // 
             // sendfiles
             // 
@@ -90,9 +93,16 @@
             this.sharedfilestab.Text = "sharedfiles";
             this.sharedfilestab.UseVisualStyleBackColor = true;
             // 
-            // savefile
+            // pathtextbox
             // 
-            this.savefile.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            this.pathtextbox.Location = new System.Drawing.Point(771, 14);
+            this.pathtextbox.Name = "pathtextbox";
+            this.pathtextbox.Size = new System.Drawing.Size(322, 22);
+            this.pathtextbox.TabIndex = 1;
+            // 
+            // savefile2
+            // 
+            this.savefile2.FileName = "openFileDialog1";
             // 
             // Dan_s_cloud_gui
             // 
@@ -105,6 +115,7 @@
             this.Text = "Dan_s_cloud_gui";
             this.tabControl1.ResumeLayout(false);
             this.myfilestab.ResumeLayout(false);
+            this.myfilestab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -116,6 +127,7 @@
         private System.Windows.Forms.Button sendfiles;
         private System.Windows.Forms.TabPage sharedfilestab;
         private System.Windows.Forms.Button savefiles;
-        private System.Windows.Forms.SaveFileDialog savefile;
+        private System.Windows.Forms.TextBox pathtextbox;
+        private System.Windows.Forms.OpenFileDialog savefile2;
     }
 }

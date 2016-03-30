@@ -109,21 +109,23 @@ namespace dan_s_login_gui
             }
             else
             {
+                //עובד! להוריד הערה בסוף השיעור
                 string username = loginusername.Text;
                 string password = loginpassword.Text;
                 client.Send("login");
                 client.Send(username);
-                MessageBox.Show(username);
+                //MessageBox.Show(username);
                 Thread.Sleep(1000);
                 client.Send(password);
-                string msg = client.Recv2();
-                //string result= Encoding.UTF8.GetString(msg);
-                MessageBox.Show(msg.ToString());
-                MessageBox.Show(msg.Length.ToString());
-                if(msg == "login good")
+                byte[] msg = client.Recv(1024);
+                string result = Encoding.UTF8.GetString(msg);
+                MessageBox.Show(result.ToString());
+                MessageBox.Show(result.Length.ToString());
+                //לסדר את בעיית ההתחברות לא עובד!
+                if (result == "login good")
                 {
-                    Dan_s_cloud_gui form = new Dan_s_cloud_gui(username);
-                    MessageBox.Show("hello" + username + " you are now signd in");
+                    Dan_s_cloud_gui form = new Dan_s_cloud_gui(username, client);
+                    MessageBox.Show("hello " + username + " you are now signd in");
                     form.Show();
                     this.Hide();
                 }
@@ -132,7 +134,13 @@ namespace dan_s_login_gui
                     MessageBox.Show("not good try again");
 
                 }
-                
+                //Dan_s_cloud_gui form = new Dan_s_cloud_gui("roi", client);
+                //form.Show();
+                //MessageBox.Show("hello" + roi + " you are now signd in");
+                //הכנסה ידנית למחוק לאחר סידור פעולת ההתחברות
+                //Dan_s_cloud_gui form2 = new Dan_s_cloud_gui("ronnie",client);
+                //form2.Show();
+
             }
             
             

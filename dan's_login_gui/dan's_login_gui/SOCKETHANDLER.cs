@@ -28,11 +28,28 @@ namespace dan_s_login_gui
             byte[] data = Encoding.ASCII.GetBytes(text);
             this.sck.Send(data);
         }
+        public string RecvStr(int BUFFSIZE)
+        {
+            return Encoding.UTF8.GetString(Recv(BUFFSIZE));
+        }
         public byte[] Recv(int BUFFSIZE)
         {
             byte[] buffer = new byte[BUFFSIZE];
-            this.sck.Receive(buffer);
-            return buffer;
+            int l = -1;
+            List<byte> recvBuffer = new List<byte>();
+            while (true)
+            {
+                l = this.sck.Receive(buffer);
+                if (l > 0)
+                {
+                    recvBuffer.AddRange(buffer.Take(l));
+                }
+                if (l < BUFFSIZE)
+                {
+                    break;
+                }
+            }
+            return recvBuffer.ToArray();
         }
         public string Recv2()
         {
@@ -40,7 +57,7 @@ namespace dan_s_login_gui
             int k = this.stm.Read(bb, 0, 1024);
             string info = "";
             for (int i = 0; i < k; i++)
-                info = info + Convert.ToChar(bb[i]);
+                info = info + Convert.ToString(bb[i]);
             return info;
 
         }
