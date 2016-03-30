@@ -11,11 +11,23 @@ namespace dan_s_login_gui
 {
     public partial class Dan_s_cloud_gui : Form
     {
-      
-        public Dan_s_cloud_gui()
+        private string username;
+
+        public Dan_s_cloud_gui(string username)
         {
             InitializeComponent();
+            this.username = username;
             
+        }
+
+        private void sendfiles_Click(object sender, EventArgs e)
+        {
+            savefile.ShowDialog();
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
         }
         //private void browse2lock_Click(object sender, EventArgs e)
         //{

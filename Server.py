@@ -33,7 +33,7 @@ class Communication:
     def Thread_Handler(self, clientsock, addr):
         while 1:
             data = clientsock.recv(BUFF)
-            if not data: break
+            #if not data: break
             print repr(addr) + ' recv:' + repr(data)
             clientsock.send(self.response(data))
             print repr(addr) + ' sent:' + repr(self.response(data))

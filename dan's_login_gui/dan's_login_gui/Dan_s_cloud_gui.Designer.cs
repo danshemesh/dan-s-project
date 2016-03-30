@@ -34,6 +34,7 @@
             this.savefiles = new System.Windows.Forms.Button();
             this.sendfiles = new System.Windows.Forms.Button();
             this.sharedfilestab = new System.Windows.Forms.TabPage();
+            this.savefile = new System.Windows.Forms.SaveFileDialog();
             this.tabControl1.SuspendLayout();
             this.myfilestab.SuspendLayout();
             this.SuspendLayout();
@@ -77,6 +78,7 @@
             this.sendfiles.TabIndex = 0;
             this.sendfiles.Text = "share files";
             this.sendfiles.UseVisualStyleBackColor = true;
+            this.sendfiles.Click += new System.EventHandler(this.sendfiles_Click);
             // 
             // sharedfilestab
             // 
@@ -87,6 +89,10 @@
             this.sharedfilestab.TabIndex = 1;
             this.sharedfilestab.Text = "sharedfiles";
             this.sharedfilestab.UseVisualStyleBackColor = true;
+            // 
+            // savefile
+            // 
+            this.savefile.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
             // Dan_s_cloud_gui
             // 
@@ -110,5 +116,6 @@
         private System.Windows.Forms.Button sendfiles;
         private System.Windows.Forms.TabPage sharedfilestab;
         private System.Windows.Forms.Button savefiles;
+        private System.Windows.Forms.SaveFileDialog savefile;
     }
 }

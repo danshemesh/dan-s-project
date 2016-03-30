@@ -108,15 +108,33 @@ namespace dan_s_login_gui
                 this.Show();
             }
             else
+            {
+                string username = loginusername.Text;
+                string password = loginpassword.Text;
                 client.Send("login");
-                client.Send(loginusername.Text);
+                client.Send(username);
+                MessageBox.Show(username);
                 Thread.Sleep(1000);
-                client.Send(loginpassword.Text);
-                registerusername.Text = "";
-                registerpassword.Text = "";
-                Dan_s_cloud_gui form = new Dan_s_cloud_gui();
-                form.Show();
-            this.Hide();
+                client.Send(password);
+                string msg = client.Recv2();
+                //string result= Encoding.UTF8.GetString(msg);
+                MessageBox.Show(msg.ToString());
+                MessageBox.Show(msg.Length.ToString());
+                if(msg == "login good")
+                {
+                    Dan_s_cloud_gui form = new Dan_s_cloud_gui(username);
+                    MessageBox.Show("hello" + username + " you are now signd in");
+                    form.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("not good try again");
+
+                }
+                
+            }
+            
             
         }
 
@@ -138,6 +156,7 @@ namespace dan_s_login_gui
             client.Send(registerpassword.Text);
             registerusername.Text = "";
             registerpassword.Text = "";
+            MessageBox.Show("thank you for registering please login");
 
         }
 

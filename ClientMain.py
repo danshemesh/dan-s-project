@@ -54,8 +54,9 @@ while msg != "Server response: close":
         print "recieved after pass"
         print msg
         if msg=="login not good":
-            a.client_socket.send("login")
+            clientsock.send("login not good")
         elif msg=="login good":
+            clientsock.send("login good")
             """a.sendmsg()"""
         """if msg == "Server response: login username not good please try again":
             a.loginu()
@@ -72,8 +73,11 @@ while msg != "Server response: close":
     else:
         print "unknown msg"
         #a.sendmsg()
-
-    msg = a.recvmsg()
+    msg=clientsock.recv(1024)
+    print msg
+    a.client_socket.send(msg)
+    msg=a.recvmsg()
+    #msg = a.recvmsg()
 
 
 

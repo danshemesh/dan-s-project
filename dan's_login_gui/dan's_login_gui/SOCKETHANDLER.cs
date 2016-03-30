@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
+using System.IO;
 
 namespace dan_s_login_gui
 {
@@ -12,6 +13,7 @@ namespace dan_s_login_gui
     {
         private Socket sck;
         private IPEndPoint iep;
+        public Stream stm;
         public SOCKETHANDLER()
         {
             this.sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -31,6 +33,16 @@ namespace dan_s_login_gui
             byte[] buffer = new byte[BUFFSIZE];
             this.sck.Receive(buffer);
             return buffer;
+        }
+        public string Recv2()
+        {
+            byte[] bb = new byte[1024];
+            int k = this.stm.Read(bb, 0, 1024);
+            string info = "";
+            for (int i = 0; i < k; i++)
+                info = info + Convert.ToChar(bb[i]);
+            return info;
+
         }
     }
 }
