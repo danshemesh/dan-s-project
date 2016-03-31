@@ -26,7 +26,7 @@ port2=1238
 class Communication():
     def __init__(self):
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client_socket.connect(('127.0.0.1', Port))
+        self.client_socket.connect(('10.92.5.47', Port))
         """    def connect(self):#1
         t=None"""
 
@@ -86,7 +86,7 @@ class ClientFilesManager:
         f=open(filename,'rb')
         size=os.path.getsize(filename)
         content=f.read(size)
-        c.client_socket.send(filename + "@"+str(size))
+        c.client_socket.send(filename + "@"+str(size)+"#")
         c.client_socket.recv(1024)
         c.client_socket.send(content)
     def syncfile(self):
@@ -112,4 +112,3 @@ class ConfigurationMamanager:
         t=None
 class TokenManager:
     t=None
-

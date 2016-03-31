@@ -186,18 +186,20 @@ class SessionManager:
 class FilesManager:
     def uploadfile(self,username,name):
         print '7'
-        pathtosave = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles'
+        pathtosave = r"C:\\Users\\user\\Desktop\\usersofcloud\\"+username+'\\myfiles'
         print '8'
         filename = os.path.join(pathtosave,name)
         filename=open(filename,'w')
         print '9'
         return 'ok'
     def recvanduploadfile(self,clientsock,username):
-        pathtosave = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles'
+        pathtosave = "C:\\Users\\User\\Desktop\\usersofcloud\\"+username+'\\myfiles'
         data = clientsock.recv(1024)
         filename,length = data.split("@",1)
         clientsock.send("ack")
-        length=int(length)
+        length=length.split("#")
+        l=length[0]
+        length=int(l)
         fulldata= clientsock.recv(length)
         filename=os.path.basename(filename)
 
@@ -205,7 +207,7 @@ class FilesManager:
             f.write(fulldata)
 
     def deletefile(self,username,clientsock):
-        pathtodel = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles\\'
+        pathtodel = r"C:\\Users\\user\\Desktop\\usersofcloud\\"+username+'\\myfiles\\'
         #filename = 'forcing{0}damping{1}omega{2}set2.png'.format(forcing, damping, omega)
         name=clientsock.recv(1024)
         clientsock.send("ack")
@@ -308,11 +310,11 @@ class Register:
                 clientsock.send("password is not good please try again")
 
     def openfolder(self,username):
-        newpath = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username
+        newpath = r"C:\\Users\\user\\Desktop\\usersofcloud\\"+username
         if not os.path.exists(newpath):
             os.makedirs(newpath)
-            secondpath=r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles'
-            thirdpath=r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\sharedfiles'
+            secondpath=r"C:\\Users\\user\\Desktop\\usersofcloud\\"+username+'\\myfiles'
+            thirdpath=r"C:\\Users\\user\\Desktop\\usersofcloud\\"+username+'\\sharedfiles'
             os.makedirs(secondpath)
             os.makedirs(thirdpath)
 

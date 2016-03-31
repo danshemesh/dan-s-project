@@ -60,6 +60,7 @@ namespace dan_s_login_gui
             client.Recv(1024);
             client.Send(name);
             MessageBox.Show("your file has been deleted");
+            nameofiledel.Text = "";
         }
 
         private void nameofiledel_TextChanged(object sender, EventArgs e)
