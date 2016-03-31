@@ -31,11 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dan_s_cloud_gui));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.myfilestab = new System.Windows.Forms.TabPage();
+            this.pathtextbox = new System.Windows.Forms.TextBox();
             this.savefiles = new System.Windows.Forms.Button();
             this.sendfiles = new System.Windows.Forms.Button();
             this.sharedfilestab = new System.Windows.Forms.TabPage();
-            this.pathtextbox = new System.Windows.Forms.TextBox();
             this.savefile2 = new System.Windows.Forms.OpenFileDialog();
+            this.delfile = new System.Windows.Forms.Button();
+            this.nameofiledel = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.myfilestab.SuspendLayout();
             this.SuspendLayout();
@@ -52,6 +54,8 @@
             // 
             // myfilestab
             // 
+            this.myfilestab.Controls.Add(this.nameofiledel);
+            this.myfilestab.Controls.Add(this.delfile);
             this.myfilestab.Controls.Add(this.pathtextbox);
             this.myfilestab.Controls.Add(this.savefiles);
             this.myfilestab.Controls.Add(this.sendfiles);
@@ -62,6 +66,13 @@
             this.myfilestab.TabIndex = 0;
             this.myfilestab.Text = "myfiles";
             this.myfilestab.UseVisualStyleBackColor = true;
+            // 
+            // pathtextbox
+            // 
+            this.pathtextbox.Location = new System.Drawing.Point(771, 14);
+            this.pathtextbox.Name = "pathtextbox";
+            this.pathtextbox.Size = new System.Drawing.Size(322, 22);
+            this.pathtextbox.TabIndex = 1;
             // 
             // savefiles
             // 
@@ -93,16 +104,27 @@
             this.sharedfilestab.Text = "sharedfiles";
             this.sharedfilestab.UseVisualStyleBackColor = true;
             // 
-            // pathtextbox
-            // 
-            this.pathtextbox.Location = new System.Drawing.Point(771, 14);
-            this.pathtextbox.Name = "pathtextbox";
-            this.pathtextbox.Size = new System.Drawing.Size(322, 22);
-            this.pathtextbox.TabIndex = 1;
-            // 
             // savefile2
             // 
             this.savefile2.FileName = "openFileDialog1";
+            // 
+            // delfile
+            // 
+            this.delfile.Location = new System.Drawing.Point(592, 14);
+            this.delfile.Name = "delfile";
+            this.delfile.Size = new System.Drawing.Size(157, 30);
+            this.delfile.TabIndex = 2;
+            this.delfile.Text = "delete file";
+            this.delfile.UseVisualStyleBackColor = true;
+            this.delfile.Click += new System.EventHandler(this.delfile_Click);
+            // 
+            // nameofiledel
+            // 
+            this.nameofiledel.Location = new System.Drawing.Point(592, 66);
+            this.nameofiledel.Name = "nameofiledel";
+            this.nameofiledel.Size = new System.Drawing.Size(157, 22);
+            this.nameofiledel.TabIndex = 3;
+            this.nameofiledel.TextChanged += new System.EventHandler(this.nameofiledel_TextChanged);
             // 
             // Dan_s_cloud_gui
             // 
@@ -129,5 +151,7 @@
         private System.Windows.Forms.Button savefiles;
         private System.Windows.Forms.TextBox pathtextbox;
         private System.Windows.Forms.OpenFileDialog savefile2;
+        private System.Windows.Forms.TextBox nameofiledel;
+        private System.Windows.Forms.Button delfile;
     }
 }

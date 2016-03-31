@@ -50,6 +50,22 @@ namespace dan_s_login_gui
             client.Send(pathtofileupload);
             MessageBox.Show("your file has been uploaded to dan's cloud thank you!");
         }
+
+        private void delfile_Click(object sender, EventArgs e)
+        {
+            client.Send("deletfile");
+            string msg = client.RecvStr(1024);
+            string name = nameofiledel.Text;
+            client.Send(username);
+            client.Recv(1024);
+            client.Send(name);
+            MessageBox.Show("your file has been deleted");
+        }
+
+        private void nameofiledel_TextChanged(object sender, EventArgs e)
+        {
+
+        }
         //private void browse2lock_Click(object sender, EventArgs e)
         //{
         //    OpenFileDialog filestosave = new OpenFileDialog();

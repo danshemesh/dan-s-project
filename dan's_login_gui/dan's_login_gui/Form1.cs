@@ -119,10 +119,11 @@ namespace dan_s_login_gui
                 client.Send(password);
                 byte[] msg = client.Recv(1024);
                 string result = Encoding.UTF8.GetString(msg);
+               
                 MessageBox.Show(result.ToString());
                 MessageBox.Show(result.Length.ToString());
                 //לסדר את בעיית ההתחברות לא עובד!
-                if (result == "login good")
+                if (result == "login good"||result=="login goodack")
                 {
                     Dan_s_cloud_gui form = new Dan_s_cloud_gui(username, client);
                     MessageBox.Show("hello " + username + " you are now signd in");

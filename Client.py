@@ -93,14 +93,13 @@ class ClientFilesManager:
         t=None
     def editfile(self):
         t=None
-    def deletefile(self):
+    def deletefile(self,username,name,c):
         print '2'
-        msg=raw_input("enter username for file upload: ")
-        msg2=raw_input("enter a file name to upload: ")
-        msg3=msg+'#'+msg2
+        msg3=username+"@"+name
+
         print '3'
         print msg3
-        Communication().client_socket.send(msg3)
+        c.client_socket.send(msg3)
         print '4'
     def copyfile(self):
         t=None

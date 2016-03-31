@@ -73,10 +73,15 @@ while msg != "Server response: close":
         print '2'
         msg=a.client_socket.recv(1024)
     elif msg == "Server response: deletefile":
-        u.deletefile()
+        clientsock.send("ack")
+        username=clientsock.recv(1024)
+        clientsock.send("ack")
+        name=clientsock.recv(1024)
+        u.deletefile(username,name,a)
     else:
         print "unknown msg"
         #a.sendmsg()
+    clientsock.send("ack")
     msg=clientsock.recv(1024)
     print msg
     a.client_socket.send(msg)

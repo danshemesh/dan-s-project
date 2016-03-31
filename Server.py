@@ -100,13 +100,15 @@ class Communication:
                     clientsock.send("file uploaded")
                 print '6'"""
             elif "deletfile"==data.rstrip():
-                clientsock.send(self.response("deletefile"))
-                usernamefilename=clientsock.recv(BUFF)
-                print usernamefilename
-                a=usernamefilename.split('#')
-                user=a[0]
-                name=a[1]
-                u.deletefile(user,name)
+                u=FilesManager()
+                username=clientsock.recv(1024)
+                clientsock.send("got username")
+                #print usernamefilename
+                #a=usernamefilename.split('@',1)
+                #user=a[0]
+                #name=a[1]
+                u.deletefile(username,clientsock)
+                #working
 
 
 
@@ -202,9 +204,11 @@ class FilesManager:
         with open(os.path.join(pathtosave,filename), "wb") as f:
             f.write(fulldata)
 
-    def deletefile(self,username,name):
+    def deletefile(self,username,clientsock):
         pathtodel = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles\\'
         #filename = 'forcing{0}damping{1}omega{2}set2.png'.format(forcing, damping, omega)
+        name=clientsock.recv(1024)
+        clientsock.send("ack")
         filename = os.path.join(pathtodel,name)
         os.remove(filename)
 
