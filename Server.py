@@ -76,6 +76,9 @@ class Communication:
                 if answer:
                     clientsock.send("login good")
                     print "client signd in"
+                    username=clientsock.recv(1024)
+                    listoffiles=FilesManager().showfiles(username,clientsock)
+
                 else:
                     clientsock.send("login not good")
                     print "client not signd in"
@@ -211,6 +214,16 @@ class FilesManager:
         clientsock.send("ack")
         filename = os.path.join(pathtodel,name)
         os.remove(filename)
+
+    def showfiles(self,username,clientock):
+        a=os.listdir(r'C:\\Users\\dan\\Desktop\\usersofcloud\\'+username+'\\myfiles')
+        print a
+        i=0
+        info=""
+        for key in a:
+            info=info+key+"@"
+        print info
+        clientock.send(info)
 
 class ConvertFiles:
     def txtconvert(self):
