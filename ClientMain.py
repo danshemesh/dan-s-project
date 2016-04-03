@@ -57,6 +57,10 @@ while msg != "Server response: close":
             clientsock.send("login not good")
         elif msg=="login good":
             clientsock.send("login good")
+            username=clientsock.recv(1024)
+            a.client_socket.send(username)
+            listoffiles=a.client_socket.recv(1024)
+            clientsock.send(listoffiles)
             """a.sendmsg()"""
         """if msg == "Server response: login username not good please try again":
             a.loginu()
