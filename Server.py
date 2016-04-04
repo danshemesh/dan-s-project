@@ -42,9 +42,7 @@ class Communication:
                 r=Register()
                 username=r.Register(clientsock)
                 print username
-                while username==False:
-                    clientsock.send(self.response("username not good please try again"))
-                    username = clientsock.recv(BUFF)
+
                 """info = clientsock.Recv(BUFF)
                 info = info.split("#")
                 state = info[0]
@@ -70,23 +68,25 @@ class Communication:
             elif "login"==data.rstrip():
                 l=Login()
                 username = clientsock.recv(BUFF)
-                clientsock.send(self.response("username recived"))
+                clientsock.send("ack")
                 password = clientsock.recv(BUFF)
+
                 answer=l.Login(username,password)
                 if answer:
                     clientsock.send("login good")
                     print "client signd in"
                     username=clientsock.recv(1024)
-                    listoffiles=FilesManager().showfiles(username,clientsock)
-                    msg=clientsock.recv(1024)
-                    clientsock.send("ack")
-                    if msg=="showfile":
-                        nameoffile=clientsock.recv(1024)
-                        FilesManager().sendfiles(clientsock,nameoffile)
+                    FilesManager().showfiles(username,clientsock)
 
                 else:
                     clientsock.send("login not good")
                     print "client not signd in"
+            elif data.rstrip()=="downloadfile":
+                nameoffileu=clientsock.recv(1024)
+                nof,uname=nameoffileu.split("@",1)
+                FilesManager().sendfiles(clientsock,nof,uname)
+
+
             elif "uploadfiles"==data.rstrip():
                 print '1'
                 u=FilesManager()
@@ -211,19 +211,20 @@ class FilesManager:
 
         with open(os.path.join(pathtosave,filename), "wb") as f:
             f.write(fulldata)
-    def sendfiles(self,clientsock,filename):
+    def sendfiles(self,clientsock,filename,username):
 
-
+        path="C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles\\'+filename
         #print ms
         #msg3=msg+'#'+msg2
         #print msg3
 
-        f=open(filename,'rb')
-        size=os.path.getsize(filename)
+        f=open(path,'rb')
+        size=os.path.getsize(path)
         content=f.read(size)
-        clientsock.send(filename + "@"+str(size))
-        clientsock.recv(1024)
+        clientsock.send(str(size))
+        msg=clientsock.recv(1024)
         clientsock.send(content)
+
     def deletefile(self,username,clientsock):
         pathtodel = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles\\'
         #filename = 'forcing{0}damping{1}omega{2}set2.png'.format(forcing, damping, omega)
@@ -240,6 +241,8 @@ class FilesManager:
         for key in a:
             info=info+key+"@"
         print info
+        if info=="":
+            info="@"
         clientock.send(info)
 
 class ConvertFiles:
@@ -314,6 +317,7 @@ class Register:
     def Register(self,clientsock):
         #clientsock.send("please enter a username: ")
         username=clientsock.recv(1024)
+        clientsock.send("ack")
         """if DBManager().isexists(username)==False:
             return False"""
         """if username in database already the server will ask the client to enter a new username(will be added when therews a database)"""
@@ -324,18 +328,18 @@ class Register:
         x=False
         while x==False:
             password=clientsock.recv(1024)
+
             print PasswordPolicy().passlength(password)
             print PasswordPolicy().iscomplicated(password)
-            if (PasswordPolicy().passlength(password) and PasswordPolicy().iscomplicated(password)):
-                clientsock.send("password is good")
-                x=True
-                answer=DBManager().Connect(username,password)
-                if answer==True:
-                    return username
-                else:
-                    return False
+            #if (PasswordPolicy().passlength(password) and PasswordPolicy().iscomplicated(password)):
+
+                #x=True
+            answer=DBManager().Connect(username,password)
+            if answer==True:
+                return username
             else:
-                clientsock.send("password is not good please try again")
+                return False
+
 
     def openfolder(self,username):
         newpath = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username

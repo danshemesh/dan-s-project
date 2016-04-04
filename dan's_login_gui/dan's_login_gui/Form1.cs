@@ -113,17 +113,17 @@ namespace dan_s_login_gui
                 string username = loginusername.Text;
                 string password = loginpassword.Text;
                 client.Send("login");
+                client.Recv(1024);
                 client.Send(username);
+                client.Recv(1024); 
                 //MessageBox.Show(username);
-                Thread.Sleep(1000);
                 client.Send(password);
-                byte[] msg = client.Recv(1024);
-                string result = Encoding.UTF8.GetString(msg);
+                string result = client.RecvStr(1024);
                
                 MessageBox.Show(result.ToString());
                 MessageBox.Show(result.Length.ToString());
                 //לסדר את בעיית ההתחברות לא עובד!
-                if (result == "login good"||result=="login goodack")
+                if (result == "login good")
                 {
                     Dan_s_cloud_gui form = new Dan_s_cloud_gui(username, client);
                     MessageBox.Show("hello " + username + " you are now signd in");
@@ -160,7 +160,9 @@ namespace dan_s_login_gui
         private void Register_Click(object sender, EventArgs e)
         {
             client.Send("register");
+            client.Recv(1024);
             client.Send(registerusername.Text);
+            client.Recv(1024);
             Thread.Sleep(1000);
             client.Send(registerpassword.Text);
             registerusername.Text = "";

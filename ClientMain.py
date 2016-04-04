@@ -18,6 +18,7 @@ print 'waiting for connection... listening on port', port2
 print '...connected from:', addr
 #a=Communication()
 msg=clientsock.recv(1024)
+clientsock.send("ack")
 print msg
 a.client_socket.send(msg)
 msg=a.recvmsg()
@@ -33,9 +34,9 @@ while msg != "Server response: close":
     print msg
     if msg == "Server response: register":
         print 1
+
         a.registeru(clientsock)
         print 2
-
         a.registerpass(clientsock)
         print 3
     elif msg == "password is good":
@@ -47,8 +48,7 @@ while msg != "Server response: close":
         a.registerpass(clientsock)
     elif msg == "Server response: login":
         a.loginu(clientsock)
-        msg=a.client_socket.recv(1024)
-        print msg
+
         a.loginpass(clientsock)
         print "after pass"
         msg=a.client_socket.recv(1024)
@@ -62,20 +62,20 @@ while msg != "Server response: close":
             a.client_socket.send(username)
             listoffiles=a.client_socket.recv(1024)
             clientsock.send(listoffiles)
-        elif msg=="showfile":
-            pathfile=clientsock.recv(1024);
-            clientsock.send("ack")
-            a.client_socket.send("showfile")
-            path,nof=pathfile.split("@",1)
-            a.client_socket.send(nof)
-            a.client_socket.recv(1024)
-            p.recvndupload(nof,path,a)
-            """a.sendmsg()"""
+    elif msg=="Server response: downloadfile":
+        clientsock.send("ack")
+        pathfile=clientsock.recv(1024)
+        print pathfile
+        clientsock.send("ack")
+        path,nof,uname=pathfile.split("@",2)
+        a.client_socket.send(nof+"@"+uname)
+
+        p.recvndupload(nof,path,a)
+        """a.sendmsg()"""
         """if msg == "Server response: login username not good please try again":
             a.loginu()
         elif msg == "Server response: login password not good please try again":
             a.loginpass()"""
-
     elif msg == "Server response: uploadfiles":
         print '1'
         clientsock.send("ack")
@@ -96,7 +96,7 @@ while msg != "Server response: close":
         #a.sendmsg()
     clientsock.send("ack")
     msg=clientsock.recv(1024)
-    print msg
+    print 'M:' + msg
     a.client_socket.send(msg)
     msg=a.recvmsg()
     #msg = a.recvmsg()

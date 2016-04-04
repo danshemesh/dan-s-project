@@ -26,7 +26,8 @@ namespace dan_s_login_gui
             client.Send(username);
             this.myfiles = client.RecvStr(1024);
             Console.WriteLine(this.myfiles);
-            this.lmyfiles = myfiles.Split('@');
+            this.lmyfiles = myfiles.Split("@".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            client.Recv(1024);
             initListView();
             managemyfiles(this.lmyfiles);
             
@@ -71,7 +72,7 @@ namespace dan_s_login_gui
             client.Recv(1024);
             client.Send(pathtofileupload);
             MessageBox.Show("your file has been uploaded to dan's cloud thank you!");
-            myfileslist.Refresh();
+            
         }
 
         private void delfile_Click(object sender, EventArgs e)
@@ -107,14 +108,14 @@ namespace dan_s_login_gui
 
         private void button2_Click(object sender, EventArgs e)
         {
-            client.Send("showfile");
+            client.Send("downloadfile");
             client.Recv(1024);
             string path = pathtextbox.Text;
             string filename = myfileslist.SelectedItems[0].Text;
-            string pathefile = path + "@" + filename;
+            string pathefile = path + "@" + filename+"@"+username;
             client.Send(pathefile);
             client.Recv(1024);
-            myfileslist.Refresh();
+            
             //foreach (Object obj in myfileslist.SelectedItems)
             //{
             //    MessageBox.Show(obj.ToString());

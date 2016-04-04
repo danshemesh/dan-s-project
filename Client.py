@@ -38,12 +38,16 @@ class Communication():
         return response
     def registeru(self,clientsock):
         msg=clientsock.recv(1024)
+        clientsock.send("ack")
         print msg
         self.client_socket.send(msg)
+        self.client_socket.recv(1024)
     def registerpass(self,clientsock):
         msg=clientsock.recv(1024)
+        clientsock.send("ack")
         print msg
         self.client_socket.send(msg)
+        self.client_socket.recv(1024)
     def disconnect(self):
         #print "are you sure you want to disconnect? y/n"
         #a = raw_input("enter your answer: ")
@@ -57,10 +61,13 @@ class Communication():
         #    return 'y'
     def loginu(self,clientsock):
         msg=clientsock.recv(1024)
+        clientsock.send("ack")
         self.client_socket.send(msg)
+        self.client_socket.recv(1024)
     def loginpass(self,clientsock):
         msg=clientsock.recv(1024)
         self.client_socket.send(msg)
+
 
 
 
@@ -74,15 +81,14 @@ class Presentation:
     def recieveutemstoshow(self):
         t=None
     def recvndupload(self,name,path,c):
-        c.client_socket.send(name)
         data = c.client_socket.recv(1024)
-        filename,length = data.split("@",1)
+        length = data
         c.client_socket.send("ack")
         length=int(length)
         fulldata= c.client_socket.recv(length)
-        filename=os.path.basename(filename)
 
-        with open(os.path.join(path,filename), "wb") as f:
+
+        with open(os.path.join(path,name), "wb") as f:
             f.write(fulldata)
 
     def showfiles(self):
