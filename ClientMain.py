@@ -4,6 +4,7 @@ import time
 print "welcone new client to dan's cloud"
 print "you can use our of cloud saving and sharing from everywhere"
 a=Client.Communication()
+p=Client.Presentation()
 port2=1238
 host='0.0.0.0'
 #listen=Client.ServerComGUI().listener()
@@ -61,6 +62,14 @@ while msg != "Server response: close":
             a.client_socket.send(username)
             listoffiles=a.client_socket.recv(1024)
             clientsock.send(listoffiles)
+        elif msg=="showfile":
+            pathfile=clientsock.recv(1024);
+            clientsock.send("ack")
+            a.client_socket.send("showfile")
+            path,nof=pathfile.split("@",1)
+            a.client_socket.send(nof)
+            a.client_socket.recv(1024)
+            p.recvndupload(nof,path,a)
             """a.sendmsg()"""
         """if msg == "Server response: login username not good please try again":
             a.loginu()

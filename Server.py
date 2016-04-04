@@ -78,6 +78,11 @@ class Communication:
                     print "client signd in"
                     username=clientsock.recv(1024)
                     listoffiles=FilesManager().showfiles(username,clientsock)
+                    msg=clientsock.recv(1024)
+                    clientsock.send("ack")
+                    if msg=="showfile":
+                        nameoffile=clientsock.recv(1024)
+                        FilesManager().sendfiles(clientsock,nameoffile)
 
                 else:
                     clientsock.send("login not good")
@@ -206,7 +211,19 @@ class FilesManager:
 
         with open(os.path.join(pathtosave,filename), "wb") as f:
             f.write(fulldata)
+    def sendfiles(self,clientsock,filename):
 
+
+        #print ms
+        #msg3=msg+'#'+msg2
+        #print msg3
+
+        f=open(filename,'rb')
+        size=os.path.getsize(filename)
+        content=f.read(size)
+        clientsock.send(filename + "@"+str(size))
+        clientsock.recv(1024)
+        clientsock.send(content)
     def deletefile(self,username,clientsock):
         pathtodel = r"C:\\Users\\dan\\Desktop\\usersofcloud\\"+username+'\\myfiles\\'
         #filename = 'forcing{0}damping{1}omega{2}set2.png'.format(forcing, damping, omega)

@@ -73,6 +73,18 @@ class UserForm:
 class Presentation:
     def recieveutemstoshow(self):
         t=None
+    def recvndupload(self,name,path,c):
+        c.client_socket.send(name)
+        data = c.client_socket.recv(1024)
+        filename,length = data.split("@",1)
+        c.client_socket.send("ack")
+        length=int(length)
+        fulldata= c.client_socket.recv(length)
+        filename=os.path.basename(filename)
+
+        with open(os.path.join(path,filename), "wb") as f:
+            f.write(fulldata)
+
     def showfiles(self):
         t=None
 class ClientFilesManager:

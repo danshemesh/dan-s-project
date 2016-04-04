@@ -20,7 +20,7 @@ namespace dan_s_login_gui
         public Dan_s_cloud_gui(string username,SOCKETHANDLER client)
         {
             InitializeComponent();
-            
+            button2.Hide();
             this.username = username;
             this.client = client;
             client.Send(username);
@@ -71,6 +71,7 @@ namespace dan_s_login_gui
             client.Recv(1024);
             client.Send(pathtofileupload);
             MessageBox.Show("your file has been uploaded to dan's cloud thank you!");
+            myfileslist.Refresh();
         }
 
         private void delfile_Click(object sender, EventArgs e)
@@ -106,7 +107,14 @@ namespace dan_s_login_gui
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            client.Send("showfile");
+            client.Recv(1024);
+            string path = pathtextbox.Text;
+            string filename = myfileslist.SelectedItems[0].Text;
+            string pathefile = path + "@" + filename;
+            client.Send(pathefile);
+            client.Recv(1024);
+            myfileslist.Refresh();
             //foreach (Object obj in myfileslist.SelectedItems)
             //{
             //    MessageBox.Show(obj.ToString());
@@ -148,6 +156,21 @@ namespace dan_s_login_gui
            
             
 
+        }
+
+        private void pathtextbox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void browse_Click(object sender, EventArgs e)
+        {
+            
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                pathtextbox.Text = folderBrowserDialog1.SelectedPath;
+            }
+            button2.Show();
         }
 
         //private void browse2lock_Click(object sender, EventArgs e)

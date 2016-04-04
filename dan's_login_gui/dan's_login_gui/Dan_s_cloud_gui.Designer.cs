@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dan_s_cloud_gui));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.myfilestab = new System.Windows.Forms.TabPage();
+            this.myfileslist = new System.Windows.Forms.ListView();
             this.button2 = new System.Windows.Forms.Button();
             this.nameofiledel = new System.Windows.Forms.TextBox();
             this.delfile = new System.Windows.Forms.Button();
@@ -39,7 +40,8 @@
             this.sendfiles = new System.Windows.Forms.Button();
             this.sharedfilestab = new System.Windows.Forms.TabPage();
             this.savefile2 = new System.Windows.Forms.OpenFileDialog();
-            this.myfileslist = new System.Windows.Forms.ListView();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.browse = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.myfilestab.SuspendLayout();
             this.SuspendLayout();
@@ -56,6 +58,7 @@
             // 
             // myfilestab
             // 
+            this.myfilestab.Controls.Add(this.browse);
             this.myfilestab.Controls.Add(this.myfileslist);
             this.myfilestab.Controls.Add(this.button2);
             this.myfilestab.Controls.Add(this.nameofiledel);
@@ -71,19 +74,28 @@
             this.myfilestab.Text = "myfiles";
             this.myfilestab.UseVisualStyleBackColor = true;
             // 
+            // myfileslist
+            // 
+            this.myfileslist.Location = new System.Drawing.Point(17, 114);
+            this.myfileslist.Name = "myfileslist";
+            this.myfileslist.Size = new System.Drawing.Size(1276, 356);
+            this.myfileslist.TabIndex = 7;
+            this.myfileslist.UseCompatibleStateImageBehavior = false;
+            this.myfileslist.SelectedIndexChanged += new System.EventHandler(this.myfileslist_SelectedIndexChanged_1);
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(17, 85);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(85, 23);
             this.button2.TabIndex = 6;
-            this.button2.Text = "button2";
+            this.button2.Text = "download";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // nameofiledel
             // 
-            this.nameofiledel.Location = new System.Drawing.Point(592, 66);
+            this.nameofiledel.Location = new System.Drawing.Point(429, 18);
             this.nameofiledel.Name = "nameofiledel";
             this.nameofiledel.Size = new System.Drawing.Size(157, 22);
             this.nameofiledel.TabIndex = 3;
@@ -101,10 +113,11 @@
             // 
             // pathtextbox
             // 
-            this.pathtextbox.Location = new System.Drawing.Point(771, 14);
+            this.pathtextbox.Location = new System.Drawing.Point(123, 86);
             this.pathtextbox.Name = "pathtextbox";
             this.pathtextbox.Size = new System.Drawing.Size(322, 22);
             this.pathtextbox.TabIndex = 1;
+            this.pathtextbox.TextChanged += new System.EventHandler(this.pathtextbox_TextChanged);
             // 
             // savefiles
             // 
@@ -140,14 +153,15 @@
             // 
             this.savefile2.FileName = "openFileDialog1";
             // 
-            // myfileslist
+            // browse
             // 
-            this.myfileslist.Location = new System.Drawing.Point(17, 114);
-            this.myfileslist.Name = "myfileslist";
-            this.myfileslist.Size = new System.Drawing.Size(1276, 356);
-            this.myfileslist.TabIndex = 7;
-            this.myfileslist.UseCompatibleStateImageBehavior = false;
-            this.myfileslist.SelectedIndexChanged += new System.EventHandler(this.myfileslist_SelectedIndexChanged_1);
+            this.browse.Location = new System.Drawing.Point(468, 86);
+            this.browse.Name = "browse";
+            this.browse.Size = new System.Drawing.Size(82, 22);
+            this.browse.TabIndex = 8;
+            this.browse.Text = "browse";
+            this.browse.UseVisualStyleBackColor = true;
+            this.browse.Click += new System.EventHandler(this.browse_Click);
             // 
             // Dan_s_cloud_gui
             // 
@@ -178,5 +192,7 @@
         private System.Windows.Forms.Button delfile;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ListView myfileslist;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Button browse;
     }
 }
